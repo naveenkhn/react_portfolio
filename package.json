@@ -9,7 +9,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "predeploy": "vite build",
+    "predeploy": "vite build && echo 'www.naveenkhn.com' > dist/CNAME",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
