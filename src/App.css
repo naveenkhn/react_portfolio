@@ -330,8 +330,35 @@ body, html {
   margin-right: 5px;
 }
 
+/* wrap tiles + arrows */
+.skills-scroller-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+/* arrow buttons */
+.scroll-btn {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0 0.5rem;
+  user-select: none;
+  z-index: 2;
+}
+.scroll-btn.left {
+  margin-right: 0.5rem;
+}
+.scroll-btn.right {
+  margin-left: 0.5rem;
+}
+
 /* Tiles Container: 70% width => 15% offset on each side */
 .tiles-container {
+  flex: 1;
   width: 90%;
   margin: 0 auto;
   display: flex;
