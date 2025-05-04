@@ -4,6 +4,7 @@ import About from './components/About';
 import Skills from './components/Skills';
 import Footer from './components/Footer';
 import Loading from './components/Loading';
+import Experience from './components/Experience';
 import { useState } from 'react';
 
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
           <main className="main-content">
             <About />
             <Skills />
+            <Experience />
           </main>
           <Footer />
         </>

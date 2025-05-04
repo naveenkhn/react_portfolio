@@ -1,5 +1,6 @@
 "use client";
 import React, { useRef } from "react";
+import './Skills.css';
 import { motion, useScroll, useMotionValue, useMotionValueEvent, animate } from "framer-motion";
 import { FaReact, FaNodeJs, FaPython, FaDocker, FaGithub } from "react-icons/fa";
 import { 

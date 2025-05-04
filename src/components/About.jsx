@@ -1,5 +1,6 @@
 // components/About.jsx
 import React from 'react';
+import './About.css';
 import SocialLinks from './SocialLinks';
 
 const About = () => {

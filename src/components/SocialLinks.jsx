@@ -14,7 +14,7 @@ const SocialLinks = () => {
         <FaGithub />
       </a>
       <a
-        href="https://www.linkedin.com/in/naveen-k-31a46243/"
+        href="https://www.linkedin.com/in/naveenkhn/"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="LinkedIn"

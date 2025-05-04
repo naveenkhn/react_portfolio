@@ -1,0 +1,163 @@
+/* About Section */
+.about-section {
+    padding: 120px 0;  /* increased vertical padding for centering About section */
+  }
+  
+  /* Greeting Container */
+  .greeting-container {
+    text-align: left;
+  }
+  
+  .greeting-container h1 {
+    margin: 0; /* remove default h1 margin */
+  }
+  
+  .greeting-text {
+    font-size: 20px;
+    color: var(--primary);
+    font-weight: normal;
+  }
+  
+  .name-text {
+    font-size: 80px;
+    color: #a8b2d1;
+  }
+  
+  /* Tagline Container */
+  .tagline-container {
+    text-align: left;
+  }
+  
+  .tagline-container h2 {
+    font-size: 30px; /* as requested */
+    color: var(--secondary);
+    margin: 0;
+    white-space: nowrap;
+  }
+  
+  /* About Paragraph: 2 columns (50:50) */
+  .about-paragraph {
+    margin-top: 10px;  /* small gap between tagline and paragraph */
+  }
+  
+  .about-content {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .about-text-left {
+    width: 50%;
+  }
+  
+  .about-text-right {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* align top edges */
+  }
+  
+  /* Social & Resume */
+  .social-and-resume {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 10px;
+  }
+  
+  .social-links-about {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .social-links-about a {
+    color: #a8b2d1;
+    font-size: 24px;
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+  
+  .social-links-about a:hover {
+    transform: translateY(-5px);
+    color: var(--primary);
+  }
+  
+  /* Resume Button: highlight color always */
+  .resume-button {
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--primary) !important;
+    border: 1px solid var(--primary);
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .resume-button:hover {
+    box-shadow: 0 0 8px var(--primary);
+  }
+  
+  /* Amadeus Link: highlight color, no color change on hover */
+  .amadeus-link {
+    color: var(--primary) !important;
+    text-decoration: none;
+    position: relative;
+  }
+  
+  .amadeus-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 1px;
+    width: 0;
+    background-color: var(--primary);
+    transition: width 0.3s ease;
+  }
+  
+  .amadeus-link:hover::after {
+    width: 100%;
+  }
+  
+  /* Profile Pic: two-layer effect, shifted downwards if needed */
+  .profile-pic-container {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    cursor: pointer;
+    margin-top: 20px; /* push profile pic down if needed */
+  }
+  
+  .profile-pic-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid var(--primary);
+    border-radius: 6px;
+    transform: translate(10px, 10px);
+    transition: transform 0.3s ease;
+    z-index: 1;
+  }
+  
+  .profile-pic {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+    transform: translate(-5px, -5px);
+    transition: transform 0.3s ease;
+    z-index: 2;
+  }
+  
+  /* On hover, move layers further apart at 45° angle */
+  .profile-pic-container:hover .profile-pic-bg {
+    transform: translate(20px, 20px);
+  }
+  
+  .profile-pic-container:hover .profile-pic {
+    transform: translate(-10px, -10px);
+  }
