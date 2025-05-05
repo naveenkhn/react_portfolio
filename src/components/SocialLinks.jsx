@@ -22,7 +22,7 @@ const SocialLinks = () => {
         <FaLinkedin />
       </a>
       <a
-        href="https://www.instagram.com/_n.a.v.e_e.n_/"
+        href="https://www.instagram.com/naveenk_hn/"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Instagram"

@@ -1,5 +1,5 @@
 .experience-section {
-    padding: 80px 0;
+    padding: 120px 0;
   }
   
   .experience-content {
@@ -110,7 +110,14 @@
   .company-name:hover {
     color: var(--primary); /* prevents color change on hover */
   }
-  
+
   .company-name:hover::after {
     width: 100%;
+  }
+
+  .experience-tech {
+    font-size: 15px;
+    color: var(--primary);
+    margin-bottom: 15px;
+    font-family: var(--font-mono);
   }

@@ -28,8 +28,8 @@ const Header = () => {
       </a>
       <nav className="nav-links">
         <a href="#home" className="nav-item"><span>01.</span> About</a>
-        <a href="#skills" className="nav-item"><span>02.</span> Skills</a>
-        <a href="#experience" className="nav-item"><span>03.</span> Experience</a>
+        <a href="#experience" className="nav-item"><span>02.</span> Experience</a>
+        <a href="#skills" className="nav-item"><span>03.</span> Skills</a>
         <a href="#work" className="nav-item"><span>04.</span> Work</a>
         <a href="#contact" className="nav-item"><span>05.</span> Contact</a>
       </nav>

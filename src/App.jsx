@@ -18,8 +18,8 @@ export default function App() {
           <Header />
           <main className="main-content">
             <About />
+            <Experience />            
             <Skills />
-            <Experience />
           </main>
           <Footer />
         </>
