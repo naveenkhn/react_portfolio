@@ -129,7 +129,7 @@ const Skills = () => {
     <section id="skills" className="skills-section section-content">
       <div className="skills-title">
         <h2>
-          <span className="skills-number">02.</span> Skills
+          <span className="skills-number">03.</span> Skills
         </h2>
       </div>
 

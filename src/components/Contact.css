@@ -1,0 +1,56 @@
+/* Contact Section */
+.contact-section {
+    padding: 120px 0;
+    text-align: center;
+  }
+  
+  .contact-content {
+    width: 90%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  /* Title styling similar to other sections */
+  .contact-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .contact-title h2 {
+    font-size: 24px;
+    color: var(--white);
+    margin: 0;
+  }
+  
+  .contact-number {
+    font-family: var(--font-mono);
+    color: var(--primary);
+    font-size: 20px;
+  }
+  
+  /* Paragraph */
+  .contact-description {
+    font-size: 16px;
+    color: var(--secondary);
+    margin-bottom: 40px;
+    line-height: 1.6;
+  }
+  
+  /* Email Button */
+  .contact-email-button {
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--primary) !important;
+    border: 1px solid var(--primary);
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .contact-email-button:hover {
+    box-shadow: 0 0 8px var(--primary);
+  }
