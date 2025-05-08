@@ -20,17 +20,11 @@
   }
   
   .contact-title h2 {
-    font-size: 24px;
-    color: var(--white);
+    font-size: 48px;
+    color: #a8b2d1;
     margin: 0;
   }
-  
-  .contact-number {
-    font-family: var(--font-mono);
-    color: var(--primary);
-    font-size: 20px;
-  }
-  
+
   /* Paragraph */
   .contact-description {
     font-size: 16px;
