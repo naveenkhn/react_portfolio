@@ -65,7 +65,7 @@ const companies = [
     role: 'Software Developer',
     period: 'July 2011 - Sep 2013',
     url: 'https://www.hcltech.com/',
-    tech: 'C++, Shell | Linux Platform',
+    tech: 'C++, Python | Linux Platform',
     image: '/assets/sony_bravia.jpg',
     project: 'BRAVIA SMART TV',
     client: 'SONY',

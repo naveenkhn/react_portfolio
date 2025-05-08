@@ -41,7 +41,7 @@ const About = () => {
               <div className="social-and-resume">
                 <SocialLinks />
                 <a
-                  href="/resume.pdf"
+                  href="/assets/naveenkhn_resume.pdf"
                   className="resume-button"
                   target="_blank"
                   rel="noopener noreferrer"
