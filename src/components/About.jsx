@@ -6,7 +6,7 @@ import SocialLinks from './SocialLinks';
 const About = () => {
   return (
     <section id="home" className="about-section">
-      <div className="section-content">
+      <div className="about-section-content">
         <div className="greeting-container">
           <h1>
             <span className="greeting-text">Heyy, I'm </span>
@@ -21,7 +21,7 @@ const About = () => {
             {/* Left Column (50%) */}
             <div className="about-text-left">
               <p>
-                I am working as a lead engineer at{" "}
+                I'm Lead Developer at{" "}
                 <a
                   href="https://amadeus.com/en"
                   className="amadeus-link"

@@ -53,12 +53,12 @@ const Loading = ({ onComplete }) => {
 
     // Stage 5: Translate the entire overlay to header home button position.
     // Adjust x and y values as needed.
-    tl.to(overlayRef.current, {
+    /*tl.to(overlayRef.current, {
       x: -700,
       y: -350,
       duration: 0.8,
       ease: "power1.inOut"
-    });
+    });*/
 
     // Stage 6: Fade out the overlay.
     tl.to(overlayRef.current, {
