@@ -62,7 +62,7 @@ const companies = [
   },  
   {
     name: 'HCL',
-    role: 'Software Developer',
+    role: 'Developer',
     period: 'July 2011 - Sep 2013',
     url: 'https://www.hcltech.com/',
     tech: 'C++, Python | Linux Platform',

@@ -3,11 +3,14 @@
   padding: 120px 0;
 }
 
-/* Section Content: 60% width => 20% offset each side */
+/* Main content: fixed max width for better control */
 .about-section-content {
-  width: 60%;
+  width: 90%;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Greeting */
@@ -16,14 +19,16 @@
 }
 
 .greeting-text {
-  font-size: 20px;
+  font-size: clamp(18px, 2vw, 28px);
   color: var(--primary);
 }
 
+/* Name: Main Heading */
 .name-text {
-  font-size: 80px;
+  font-size: clamp(38px, 6vw, 70px);
   color: #a8b2d1;
   margin: 0;
+  line-height: 1.1;
 }
 
 /* Tagline */
@@ -32,32 +37,37 @@
 }
 
 .tagline-container h2 {
-  font-size: 35px;
+  font-size: clamp(20px, 3vw, 36px);
   color: var(--secondary);
   margin: 0;
-  white-space: nowrap;
+  font-weight: 600;
+  white-space: normal;
 }
 
 /* About Body */
 .about-paragraph {
   margin-top: 15px;
   text-align: justify;
+  font-size: clamp(14px, 1.2vw, 18px);
+  line-height: 1.7;
+  max-width: 100%;
 }
 
 .about-content {
   display: flex;
-  gap: 30px;
+  gap: 10px;
 }
 
 .about-text-left {
-  width: 60%;
+  width: 65%;
+  min-width: 320px;
 }
 
 .about-text-right {
-  width: 40%;
+  width: 35%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 }
 
 /* Social & Resume */
@@ -166,14 +176,22 @@
 }
 
 /* 🔹 Responsive Fixes */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
+  .about-section-content {
+    width: 98%;
+    max-width: 98vw;
+  }
+
   .about-content {
     flex-direction: column;
+    gap: 30px;
+    margin-top: 18px;
   }
 
   .about-text-left,
   .about-text-right {
     width: 100%;
+    min-width: unset;
   }
 
   .about-text-right {
@@ -183,18 +201,40 @@
   }
 
   .profile-pic-container {
-    width: 180px;
-    height: 180px;
+    width: 160px;
+    height: 160px;
     margin: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .about-section {
+    padding: 60px 0;
+  }
+
+  .greeting-text {
+    font-size: clamp(16px, 4vw, 22px);
   }
 
   .name-text {
-    font-size: 48px;
+    font-size: clamp(26px, 11vw, 36px);
   }
 
   .tagline-container h2 {
-    font-size: 22px;
-    white-space: normal;
+    font-size: clamp(14px, 7vw, 22px);
+  }
+
+  .about-content {
+    gap: 18px;
+  }
+
+  .about-paragraph {
+    font-size: clamp(13px, 3vw, 16px);
+  }
+
+  .profile-pic-container {
+    width: 110px;
+    height: 110px;
   }
 
   .social-and-resume {
