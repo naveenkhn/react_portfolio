@@ -145,27 +145,6 @@ body, html {
   margin: 4px 0;
 }
 
-/* Fullscreen overlay for loading animation */
-.loading-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: var(--background);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 3000;
-}
-
-/* SVG logo container */
-.loading-logo {
-  width: 70px;
-  height: 70px;
-}
-
-
 /* Remove debug outlines */
 /*div, section, header, footer {
   outline: 1px dashed red !important;

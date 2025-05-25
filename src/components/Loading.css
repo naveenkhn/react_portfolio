@@ -1,0 +1,31 @@
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--background);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+}
+
+.loading-logo {
+  width: clamp(50px, 20vw, 100px);
+  height: clamp(50px, 20vw, 100px);
+}
+
+.logo-outline {
+  fill: none;
+  stroke: var(--primary);
+  stroke-width: 5;
+  stroke-dasharray: 300;
+  stroke-linecap: round;
+}
+
+.logo-text {
+  font-size: clamp(18px, 6vw, 32px);
+  font-weight: 600;
+  fill: var(--primary);
+}

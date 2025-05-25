@@ -37,7 +37,7 @@
 }
 
 .tagline-container h2 {
-  font-size: clamp(20px, 3vw, 36px);
+  font-size: clamp(20px, 3vw, 34px);
   color: var(--secondary);
   margin: 0;
   font-weight: 600;
