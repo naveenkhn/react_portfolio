@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useInView } from 'react-intersection-observer';
+import { motion } from 'framer-motion';
 import './Experience.css';
 
 const companies = [
@@ -81,9 +83,17 @@ const companies = [
 
 function Experience() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const { ref, inView } = useInView({ triggerOnce: true });
 
   return (
-    <section className="experience-section" id="experience">
+    <motion.section
+      className="experience-section"
+      id="experience"
+      ref={ref}
+      initial={{ opacity: 0, y: 50 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, delay: 0.9 }}
+    >
       <div className="experience-content">
         <h2 className="experience-title">
           <span className="experience-number">02.</span> Experience
@@ -138,7 +148,7 @@ function Experience() {
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
 

@@ -46,7 +46,7 @@ const Header = () => {
       style={{ display: showHeader ? 'flex' : 'none' }}
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7, ease: 'easeOut' }}
+      transition={{ duration: 1.0, ease: 'easeOut' }}
     >
       <a href="#home" className="home-button diamond">
         <span className="diamond-text">N</span>

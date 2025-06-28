@@ -2,10 +2,23 @@
 import React from 'react';
 import './About.css';
 import SocialLinks from './SocialLinks';
+import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 
 const About = () => {
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
   return (
-    <section id="home" className="about-section">
+    <motion.section
+      ref={ref}
+      id="home"
+      className="about-section"
+      initial={{ opacity: 0, y: 50 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, ease: 'easeOut', delay: 0.6 }}
+    >
       <div className="about-section-content">
         <div className="greeting-container">
           <h1>
@@ -64,7 +77,7 @@ const About = () => {
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

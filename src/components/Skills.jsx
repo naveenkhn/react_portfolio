@@ -20,6 +20,7 @@ import {
   SiBitbucket 
 } from "react-icons/si";
 import { DiJava, DiGit } from "react-icons/di";
+import { useInView } from "react-intersection-observer";
 
 // Your skills data
 const skillsData = {
@@ -125,8 +126,17 @@ const Skills = () => {
   const { scrollXProgress } = useScroll({ container: containerRef });
   const maskImage = useDynamicMask(scrollXProgress);
 
+  const { ref, inView } = useInView({ triggerOnce: true });
+
   return (
-    <section id="skills" className="skills-section section-content">
+    <motion.section
+      id="skills"
+      className="skills-section section-content"
+      ref={ref}
+      initial={{ opacity: 0, y: 50 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, delay: 1.2 }}
+    >
       <div className="skills-title">
         <h2>
           <span className="skills-number">03.</span> Skills
@@ -181,7 +191,7 @@ const Skills = () => {
           ›
         </button>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
