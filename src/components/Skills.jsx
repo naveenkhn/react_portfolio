@@ -70,6 +70,9 @@ const skillsOrder = [
   "Databases"
 ];
 
+// Use the original skillsOrder array directly for display
+const displayedSkillsOrder = skillsOrder;
+
 /**
  * useDynamicMask Hook:
  * Dynamically updates the maskImage so that:
@@ -121,6 +124,7 @@ function useDynamicMask(scrollXProgress) {
 const Skills = () => {
   // Ref for the horizontally scrollable container
   const containerRef = useRef(null);
+  const tileRefs = useRef([]);
 
   // We track the horizontal scroll progress of containerRef
   const { scrollXProgress } = useScroll({ container: containerRef });
@@ -129,23 +133,45 @@ const Skills = () => {
   const { ref, inView } = useInView({ triggerOnce: true });
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const tileCount = skillsOrder.length;
+
+  const paddedSkillsOrder = [
+    skillsOrder[skillsOrder.length - 1], // Last
+    ...skillsOrder,
+    skillsOrder[0] // First again
+  ];
+
+  // Updated interval logic using useRef for intervalRef and scrollInterval
+  const scrollInterval = 4000;
+  const intervalRef = useRef(null);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (containerRef.current) {
-        const nextIndex = (currentIndex + 1) % tileCount;
-        const tileWidth = 430; // tile width + gap (400px + 30px)
-        containerRef.current.scrollTo({
-          left: nextIndex * tileWidth,
-          behavior: "smooth",
-        });
-        setCurrentIndex(nextIndex);
-      }
-    }, 4000); // scroll every 4 seconds
+    const container = containerRef.current;
+    if (!container || tileRefs.current.length === 0) return;
 
-    return () => clearInterval(interval);
-  }, [currentIndex, tileCount]);
+    let index = 1;
+    const tileCount = paddedSkillsOrder.length;
+
+    const scrollToIndex = (i) => {
+      const tile = tileRefs.current[i];
+      if (!tile) return;
+      const offset = tile.offsetLeft - (container.offsetWidth - tile.offsetWidth) / 2;
+      container.scrollTo({ left: offset, behavior: "smooth" });
+    };
+
+    scrollToIndex(index); // show 1st tile centered initially
+    setCurrentIndex(index);
+
+    intervalRef.current = setInterval(() => {
+      index++;
+      if (index === tileCount - 1) {
+        index = 1;
+      }
+      scrollToIndex(index);
+      setCurrentIndex(index);
+    }, scrollInterval);
+
+    return () => clearInterval(intervalRef.current);
+  }, []);
 
   return (
     <motion.section
@@ -180,8 +206,12 @@ const Skills = () => {
               containerRef.current.scrollLeft += e.deltaY;
             }}
           >
-            {skillsOrder.map((category) => (
-              <div className="tile" key={category}>
+            {paddedSkillsOrder.map((category, index) => (
+              <div
+                className="tile"
+                key={`${category}-${index}`}
+                ref={el => tileRefs.current[index] = el}
+              >
                 <h3 className="tile-title">{category}</h3>
                 <div className="tile-icons">
                   {skillsData[category].map((skill) => (
