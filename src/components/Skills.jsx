@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import './Skills.css';
 import { motion, useScroll, useMotionValue, useMotionValueEvent, animate } from "framer-motion";
 import { FaReact, FaNodeJs, FaPython, FaDocker, FaGithub } from "react-icons/fa";
@@ -128,68 +128,86 @@ const Skills = () => {
 
   const { ref, inView } = useInView({ triggerOnce: true });
 
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const tileCount = skillsOrder.length;
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (containerRef.current) {
+        const nextIndex = (currentIndex + 1) % tileCount;
+        const tileWidth = 430; // tile width + gap (400px + 30px)
+        containerRef.current.scrollTo({
+          left: nextIndex * tileWidth,
+          behavior: "smooth",
+        });
+        setCurrentIndex(nextIndex);
+      }
+    }, 4000); // scroll every 4 seconds
+
+    return () => clearInterval(interval);
+  }, [currentIndex, tileCount]);
+
   return (
     <motion.section
       id="skills"
-      className="skills-section section-content"
+      className="skills-section"
       ref={ref}
       initial={{ opacity: 0, y: 50 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: 1.2 }}
     >
-      <div className="skills-title">
-        <h2>
+      <div className="skills-content">
+        <h2 className="skills-title">
           <span className="skills-number">03.</span> Skills
         </h2>
-      </div>
 
-      {/* wrapper that adds wheel-to-horizontal + arrow buttons */}
-      <div className="skills-scroller-wrapper">
-        <button
-          className="scroll-btn left"
-          onClick={() =>
-            containerRef.current.scrollBy({ left: -300, behavior: "smooth" })
-          }
-        >
-          ‹
-        </button>
+        <div className="skills-scroller-wrapper">
+          <button
+            className="scroll-btn left"
+            onClick={() =>
+              containerRef.current.scrollBy({ left: -300, behavior: "smooth" })
+            }
+          >
+            ‹
+          </button>
 
-        <motion.div
-          className="tiles-container"
-          ref={containerRef}
-          style={{ maskImage }}
-          onWheel={e => {
-            e.preventDefault();
-            containerRef.current.scrollLeft += e.deltaY;
-          }}
-        >
-          {skillsOrder.map((category) => (
-            <div className="tile" key={category}>
-              <h3 className="tile-title">{category}</h3>
-              <div className="tile-icons">
-                {skillsData[category].map((skill) => (
-                  <div className="tile-item" key={skill.name}>
-                    <div className="skill-icon">{skill.icon}</div>
-                    <div className="skill-name">
-                      <span className={skill.name.length > 10 ? "marquee" : ""}>
-                        {skill.name}
-                      </span>
+          <motion.div
+            className="tiles-container"
+            ref={containerRef}
+            style={{ maskImage }}
+            onWheel={e => {
+              e.preventDefault();
+              containerRef.current.scrollLeft += e.deltaY;
+            }}
+          >
+            {skillsOrder.map((category) => (
+              <div className="tile" key={category}>
+                <h3 className="tile-title">{category}</h3>
+                <div className="tile-icons">
+                  {skillsData[category].map((skill) => (
+                    <div className="tile-item" key={skill.name}>
+                      <div className="skill-icon">{skill.icon}</div>
+                      <div className="skill-name">
+                        <span className={skill.name.length > 10 ? "marquee" : ""}>
+                          {skill.name}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
-        </motion.div>
+            ))}
+          </motion.div>
 
-        <button
-          className="scroll-btn right"
-          onClick={() =>
-            containerRef.current.scrollBy({ left: 300, behavior: "smooth" })
-          }
-        >
-          ›
-        </button>
+          <button
+            className="scroll-btn right"
+            onClick={() =>
+              containerRef.current.scrollBy({ left: 300, behavior: "smooth" })
+            }
+          >
+            ›
+          </button>
+        </div>
       </div>
     </motion.section>
   );

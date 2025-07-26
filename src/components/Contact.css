@@ -5,9 +5,9 @@
   }
   
   .contact-content {
-    width: 90%;
-    max-width: 600px;
+    width: min(90%, 600px);
     margin: 0 auto;
+    padding: 0 16px;
   }
   
   /* Title styling similar to other sections */

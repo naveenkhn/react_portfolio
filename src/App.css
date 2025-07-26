@@ -121,13 +121,6 @@ body, html {
   overflow-x: hidden;
 }
 
-/* Section Content: 60% width => 20% offset each side */
-.section-content {
-  width: 60%;
-  margin: 0 auto;
-  padding: 0;
-}
-
 /* Footer: fixed bottom, centered */
 .footer {
   position: relative;
