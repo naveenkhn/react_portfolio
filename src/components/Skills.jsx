@@ -134,39 +134,41 @@ const Skills = () => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const paddedSkillsOrder = [
-    skillsOrder[skillsOrder.length - 1], // Last
-    ...skillsOrder,
-    skillsOrder[0] // First again
-  ];
+  // Clone the skillsOrder array to create a repeated array for seamless infinite scroll
+  const repeatedSkillsOrder = [...skillsOrder, ...skillsOrder, ...skillsOrder];
 
   // Updated interval logic using useRef for intervalRef and scrollInterval
-  const scrollInterval = 4000;
+  const scrollInterval = 2000;
   const intervalRef = useRef(null);
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container || tileRefs.current.length === 0) return;
 
-    let index = 1;
-    const tileCount = paddedSkillsOrder.length;
+    let index = skillsOrder.length; // start in middle set
+    const tileCount = repeatedSkillsOrder.length;
 
-    const scrollToIndex = (i) => {
+    const scrollToIndex = (i, behavior = "smooth") => {
       const tile = tileRefs.current[i];
       if (!tile) return;
       const offset = tile.offsetLeft - (container.offsetWidth - tile.offsetWidth) / 2;
-      container.scrollTo({ left: offset, behavior: "smooth" });
+      container.scrollTo({ left: offset, behavior });
     };
 
-    scrollToIndex(index); // show 1st tile centered initially
+    scrollToIndex(index, "auto");
     setCurrentIndex(index);
 
     intervalRef.current = setInterval(() => {
       index++;
-      if (index === tileCount - 1) {
-        index = 1;
-      }
       scrollToIndex(index);
+
+      if (index >= tileCount - skillsOrder.length) {
+        index = skillsOrder.length;
+        setTimeout(() => {
+          scrollToIndex(index, "auto");
+        }, scrollInterval);
+      }
+
       setCurrentIndex(index);
     }, scrollInterval);
 
@@ -206,7 +208,7 @@ const Skills = () => {
               containerRef.current.scrollLeft += e.deltaY;
             }}
           >
-            {paddedSkillsOrder.map((category, index) => (
+            {repeatedSkillsOrder.map((category, index) => (
               <div
                 className="tile"
                 key={`${category}-${index}`}
