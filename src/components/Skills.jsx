@@ -19,7 +19,8 @@ import {
   SiGrafana, 
   SiBitbucket,
   SiRedhatopenshift,
-  SiSplunk
+  SiSplunk,
+  SiGit
 } from "react-icons/si";
 import { DiJava, DiGit } from "react-icons/di";
 import { useInView } from "react-intersection-observer";
@@ -28,45 +29,38 @@ import { useInView } from "react-intersection-observer";
 const skillsData = {
   "Web Frameworks": [
     { name: "React", icon: <FaReact size={40} color="#61dafb" /> },
-    { name: "NodeJS", icon: <FaNodeJs size={40} color="#3c873a" /> },
-    { name: "Flask", icon: <SiFlask size={40} color="#000000" /> },
-    { name: "Django", icon: <SiDjango size={40} color="#092e20" /> }
+    { name: "NodeJS", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original-wordmark.svg" alt="NodeJS" style={{ height: "60px", filter: "brightness(1.8)" }} /> },
+    { name: "Flask", icon: <SiFlask size={40} color="#3BABC3" /> },
+    { name: "Django", icon: <i className="devicon-django-plain colored" style={{ fontSize: "40px", filter: "brightness(3)" }}></i> },
   ],
   "Programming Languages": [
-    { name: "C++", icon: <SiCplusplus size={40} color="#00599C" /> },
-    { name: "Java", icon: <DiJava size={40} color="#007396" /> },
-    { name: "Python", icon: <FaPython size={40} color="#306998" /> },
+    { name: "C++", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" alt="C++" style={{ height: "50px" }} /> },
+    { name: "Java", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" alt="Java" style={{ height: "50px" }} /> },
+    { name: "Python", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python" style={{ height: "50px" }} /> },
     { name: "JavaScript", icon: <SiJavascript size={40} color="#f0db4f" /> },
-    { name: "Go", icon: <SiGo size={40} color="#00ADD8" /> }
+    { name: "Go", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/go/go-original.svg" alt="Go" style={{ height: "50px" }} /> }
   ],
   "DevOps Tools": [
-    { name: "Docker", icon: <FaDocker size={40} color="#2496ED" /> },
-    { name: "Kubernetes", icon: <SiKubernetes size={40} color="#326ce5" /> },
+    { name: "Docker", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" alt="Docker" style={{ height: "60px" }} /> },
+    { name: "Kubernetes", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-original.svg" alt="Kubernetes" style={{ height: "50px" }} /> },
     { name: "OpenShift", icon: <SiRedhatopenshift size={40} color="#EE0000" /> },
-    { name: "Argo CD", icon: <i className="devicon-argocd-plain colored" style={{ fontSize: "40px" }}></i> },
-    { name: "Git", icon: <DiGit size={40} color="#F05032" /> },
-    { name: "GitHub", icon: <FaGithub size={40} color="#181717" /> },
-    { name: "Bitbucket", icon: <SiBitbucket size={40} color="#205081" /> },
-    { name: "Jenkins", icon: <SiJenkins size={40} color="#D24939" /> }
+    { name: "Argo CD", icon: <i className="devicon-argocd-plain colored" style={{ fontSize: "50px" }}></i> },
+    { name: "Git", icon: <SiGit size={40} color="#F05032" /> },
+    { name: "GitHub", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" alt="GitHub" style={{ height: "50px", filter: "brightness(0)" }} /> },
+    { name: "Bitbucket", icon: <SiBitbucket size={40} color="#205081" style={{ filter: "brightness(1.8)" }} /> },
+    { name: "Jenkins", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jenkins/jenkins-original.svg" alt="Jenkins" style={{ height: "50px" }} /> }
   ],
   "Data Processing & Analytics": [
-    { name: "Elasticsearch", icon: <SiElasticsearch size={40} color="#005571" /> },
-    { name: "Logstash", icon: <i className="devicon-logstash-plain colored" style={{ fontSize: "40px" }}></i> },
-    { name: "Kibana", icon: <SiKibana size={40} color="#005571" /> },
-    {
-      name: "Splunk",
-      icon: (
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "60px" }}>
-          <SiSplunk size={60} color="#000000" style={{ transform: "scale(1.3)" }} />
-        </div>
-      )
-    },
-    { name: "Grafana", icon: <SiGrafana size={40} color="#F46800" /> }
+    { name: "Elasticsearch", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/elasticsearch/elasticsearch-original.svg" alt="Elasticsearch" style={{ height: "50px" }} /> },
+    { name: "Logstash", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/logstash/logstash-original.svg" alt="Logstash" style={{ height: "50px" }} /> },
+    { name: "Kibana", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kibana/kibana-original.svg" alt="Kibana" style={{ height: "50px" }} /> },
+    { name: "Splunk", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/splunk/splunk-original-wordmark.svg" alt="Splunk" style={{ height: "80px", filter: "brightness(0)" }} /> },
+    { name: "Grafana", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/grafana/grafana-original.svg" alt="Grafana" style={{ height: "50px" }} /> }
   ],
   "Databases": [
     { name: "Oracle", icon: <SiOracle size={40} color="#F80000" /> },
-    { name: "Azure Cosmos", icon: <i className="devicon-azure-plain colored" style={{ fontSize: "40px" }}></i> },
-    { name: "MySQL", icon: <SiMysql size={40} color="#4479A1" /> },
+    { name: "Azure Cosmos", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cosmosdb/cosmosdb-original.svg" alt="Azure Cosmos" style={{ height: "50px" }} /> },
+    { name: "MySQL", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original-wordmark.svg" alt="MySQL" style={{ height: "60px", filter: "brightness(1.8)" }} /> },
     { name: "MongoDB", icon: <SiMongodb size={40} color="#47A248" /> }
   ]
 };
