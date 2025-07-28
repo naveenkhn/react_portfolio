@@ -17,7 +17,9 @@ import {
   SiElasticsearch, 
   SiKibana, 
   SiGrafana, 
-  SiBitbucket 
+  SiBitbucket,
+  SiRedhatopenshift,
+  SiSplunk
 } from "react-icons/si";
 import { DiJava, DiGit } from "react-icons/di";
 import { useInView } from "react-intersection-observer";
@@ -40,8 +42,8 @@ const skillsData = {
   "DevOps Tools": [
     { name: "Docker", icon: <FaDocker size={40} color="#2496ED" /> },
     { name: "Kubernetes", icon: <SiKubernetes size={40} color="#326ce5" /> },
-    { name: "OpenShift", icon: <i className="devicon-openshift-plain colored" style={{ fontSize: "40px" }}></i> },
-    { name: "Argo CD", icon: <img src="path-to-argocd-icon.svg" alt="Argo CD" style={{ width: 40, height: 40 }} /> },
+    { name: "OpenShift", icon: <SiRedhatopenshift size={40} color="#EE0000" /> },
+    { name: "Argo CD", icon: <i className="devicon-argocd-plain colored" style={{ fontSize: "40px" }}></i> },
     { name: "Git", icon: <DiGit size={40} color="#F05032" /> },
     { name: "GitHub", icon: <FaGithub size={40} color="#181717" /> },
     { name: "Bitbucket", icon: <SiBitbucket size={40} color="#205081" /> },
@@ -51,7 +53,14 @@ const skillsData = {
     { name: "Elasticsearch", icon: <SiElasticsearch size={40} color="#005571" /> },
     { name: "Logstash", icon: <i className="devicon-logstash-plain colored" style={{ fontSize: "40px" }}></i> },
     { name: "Kibana", icon: <SiKibana size={40} color="#005571" /> },
-    { name: "Splunk", icon: <i className="devicon-splunk-plain colored" style={{ fontSize: "40px" }}></i> },
+    {
+      name: "Splunk",
+      icon: (
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "60px" }}>
+          <SiSplunk size={60} color="#000000" style={{ transform: "scale(1.3)" }} />
+        </div>
+      )
+    },
     { name: "Grafana", icon: <SiGrafana size={40} color="#F46800" /> }
   ],
   "Databases": [
@@ -151,12 +160,34 @@ const Skills = () => {
     const scrollToIndex = (i, behavior = "smooth") => {
       const tile = tileRefs.current[i];
       if (!tile) return;
-      const offset = tile.offsetLeft - (container.offsetWidth - tile.offsetWidth) / 2;
+      const isMobile = window.innerWidth <= 600;
+      const offset = isMobile
+        ? tile.offsetLeft
+        : tile.offsetLeft - (container.offsetWidth - tile.offsetWidth) / 2;
       container.scrollTo({ left: offset, behavior });
     };
 
     scrollToIndex(index, "auto");
     setCurrentIndex(index);
+
+    const handleMouseEnter = () => clearInterval(intervalRef.current);
+
+    const handleMouseLeave = () => {
+      intervalRef.current = setInterval(() => {
+        index++;
+        scrollToIndex(index);
+
+        if (index >= tileCount - skillsOrder.length) {
+          index = skillsOrder.length;
+          setTimeout(() => scrollToIndex(index, "auto"), scrollInterval);
+        }
+
+        setCurrentIndex(index);
+      }, scrollInterval);
+    };
+
+    container.addEventListener("mouseenter", handleMouseEnter);
+    container.addEventListener("mouseleave", handleMouseLeave);
 
     intervalRef.current = setInterval(() => {
       index++;
@@ -164,15 +195,17 @@ const Skills = () => {
 
       if (index >= tileCount - skillsOrder.length) {
         index = skillsOrder.length;
-        setTimeout(() => {
-          scrollToIndex(index, "auto");
-        }, scrollInterval);
+        setTimeout(() => scrollToIndex(index, "auto"), scrollInterval);
       }
 
       setCurrentIndex(index);
     }, scrollInterval);
 
-    return () => clearInterval(intervalRef.current);
+    return () => {
+      container.removeEventListener("mouseenter", handleMouseEnter);
+      container.removeEventListener("mouseleave", handleMouseLeave);
+      clearInterval(intervalRef.current);
+    };
   }, []);
 
   return (

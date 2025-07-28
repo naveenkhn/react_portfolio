@@ -44,15 +44,11 @@
   
   /* Tiles Container: 70% width => 15% offset on each side */
   .tiles-container {
-    flex: 1;
-    width: 100%;
-    margin: 0 auto;
     display: flex;
     gap: 30px;
     overflow-x: auto;
-    overflow-y: hidden; /* prevent vertical scroll */
-    padding: 20px 0 30px 0; /* extra bottom padding for gap with scrollbar */
-    /* We remove the static mask here because we dynamically set maskImage from the hook. */
+    overflow-y: hidden;
+    padding: 20px 10vw 30px 10vw;
     scroll-snap-type: x mandatory;
     scroll-padding-inline: 50%;
     scrollbar-width: none;         /* Firefox */
@@ -65,15 +61,14 @@
     border: 1px solid var(--secondary);
     border-radius: 8px;
     padding: 20px;
-    width: 80%;
-    max-width: 1100px;
+    flex: 0 0 80%;
     height: auto;
-    flex-shrink: 0;
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     scroll-snap-align: center;
+    min-width: 0;
   }
   
   /* Tile Title (center aligned) */
@@ -106,6 +101,10 @@
   .skill-icon {
     margin-bottom: 10px;
     font-size: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 64px;
   }
   .skill-name {
     font-size: 14px;
@@ -125,9 +124,7 @@
   }
 
   .tile {
-    width: 85vw;
-    max-width: 95vw;
-    height: auto;
+    flex: 0 0 80%;
   }
 
   .skill-icon {
@@ -141,10 +138,7 @@
 
 @media (max-width: 600px) {
   .tile {
-    width: 90vw;
-    min-width: 300px;
-    max-width: 95vw;
-    height: auto;
+    flex: 0 0 80%;
   }
 
   .skill-icon {
