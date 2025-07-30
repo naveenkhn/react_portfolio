@@ -1,23 +1,16 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import './Skills.css';
 import { motion } from "framer-motion";
 import { FaReact } from "react-icons/fa";
-import { 
-  SiFlask, 
-  SiDjango, 
-  SiJavascript, 
-  SiMongodb, 
-  SiKubernetes, 
-  SiJenkins,
+import {
+  SiJavascript,
+  SiFlask,
+  SiMongodb,
   SiOracle,
-  SiElasticsearch, 
-  SiKibana, 
-  SiGrafana, 
+  SiGit,
   SiBitbucket,
-  SiRedhatopenshift,
-  SiSplunk,
-  SiGit
+  SiRedhatopenshift
 } from "react-icons/si";
 import { useInView } from "react-intersection-observer";
 
@@ -69,23 +62,46 @@ const skillsOrder = [
   "Databases"
 ];
 
-// Use the original skillsOrder array directly for display
-const displayedSkillsOrder = skillsOrder;
 
 const Skills = () => {
   const { ref, inView } = useInView({ triggerOnce: true });
+  const carouselRef = useRef(null);
 
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     let angle = 0;
-    const interval = setInterval(() => {
+    let intervalId = null;
+    const rotate = () => {
       angle += 360 / skillsOrder.length;
-      if (document.querySelector(".skills-carousel")) {
-        document.querySelector(".skills-carousel").style.transform = `rotateY(-${angle}deg)`;
+      if (carouselRef.current) {
+        carouselRef.current.style.transform = `rotateY(-${angle}deg)`;
       }
-    }, 2500);
-    return () => clearInterval(interval);
+    };
+
+    const startRotation = () => {
+      if (!intervalId) {
+        intervalId = setInterval(rotate, 2500);
+      }
+    };
+
+    const stopRotation = () => {
+      clearInterval(intervalId);
+      intervalId = null;
+    };
+
+    const carousel = carouselRef.current;
+    carousel.addEventListener("mouseenter", stopRotation);
+    carousel.addEventListener("mouseleave", startRotation);
+
+    startRotation();
+
+    return () => {
+      stopRotation();
+      if (carousel) {
+        carousel.removeEventListener("mouseenter", stopRotation);
+        carousel.removeEventListener("mouseleave", startRotation);
+      }
+    };
   }, []);
 
   return (
@@ -103,7 +119,7 @@ const Skills = () => {
         </h2>
 
         <div className="skills-carousel-wrapper">
-          <div className="skills-carousel">
+          <div className="skills-carousel" ref={carouselRef}>
             {skillsOrder.map((category, index) => {
               const angle = (360 / skillsOrder.length) * index;
               return (
