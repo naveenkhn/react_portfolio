@@ -5,7 +5,7 @@
   }
 
   .skills-section {
-    padding: 120px 0;
+    padding: 100px 0;
   }
   
   /* Section Title (center aligned) */
@@ -14,117 +14,106 @@
     width: 100%;
     margin-bottom: 20px;
   }
-  .skills-title h2 {
-    font-size: 24px;
-    margin: 0;
-  }
   
-  /* wrap tiles + arrows */
-  .skills-scroller-wrapper {
-    width: 100%;
-    max-width: 100vw;
-    overflow: hidden;
-    padding: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  /* arrow buttons */
-  .scroll-btn {
-    background: none;
-    border: none;
-    color: var(--primary);
-    font-size: 2rem;
-    cursor: pointer;
-    padding: 0 0.5rem;
-    user-select: none;
-    z-index: 2;
-  }
-  
-  /* Tiles Container: 70% width => 15% offset on each side */
-  .tiles-container {
-    display: flex;
-    gap: 30px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding: 20px 10vw 30px 10vw;
-    scroll-snap-type: x mandatory;
-    scroll-padding-inline: 50%;
-    scrollbar-width: none;         /* Firefox */
-    -ms-overflow-style: none;      /* IE and Edge */
-  }
-  
-  /* Each Tile (Skill Category) */
-  .tile {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--secondary);
-    border-radius: 8px;
-    padding: 20px;
-    flex: 0 0 80%;
-    height: auto;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    scroll-snap-align: center;
-    min-width: 0;
-  }
-  
-  /* Tile Title (center aligned) */
-  .tile-title {
-    font-size: 16px;
-    font-family: var(--font-mono);
-    color: var(--primary);
-    margin-bottom: 30px; /* increased vertical spacing between title and icons */
-    text-align: center;
-  }
-  
-  /* Tile Icons: flex layout inside each tile */
-  .tile-icons {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 25px 20px;
-    width: 100%;
-  }
-  
-  /* Each Tile Item (Skill) */
-  .tile-item {
-    text-align: center;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-  }
-  .tile-item:hover .skill-icon {
-    transform: scale(1.6);
-  }
-  .skill-icon {
-    margin-bottom: 10px;
-    font-size: 64px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 64px;
-  }
-  .skill-name {
-    font-size: 14px;
-    font-family: var(--font-mono);
-    color: var(--white);
-    white-space: nowrap;
-    overflow: hidden;
-    width: 120px;
-  }
-  
+.skills-carousel-wrapper {
+  display: flex;
+  justify-content: center;
+  perspective: 1500px;
+  perspective-origin: center;
+  overflow: visible;
+  height: 560px;
+  margin-top: 20px;
+}
 
+.skills-carousel {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 1s ease-in-out;
+  width: 800px;
+  margin: 0 auto;
+  height: 100%;
+}
+
+/* Each Tile (Skill Category) */
+ .tile {
+  /* background: linear-gradient(145deg, rgba(30, 30, 30, 0.6), rgba(60, 60, 60, 0.4)); */
+  background: linear-gradient(145deg, rgba(25, 35, 65, 1), rgba(18, 28, 50, 0.98));
+  border: 1px solid var(--secondary);
+  border-radius: 8px;
+  padding: 12px;
+  width: 22rem;
+  height: 22rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-style: preserve-3d;
+  transform-origin: center center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  overflow: hidden;
+  margin-top: -176px; /* half of new height */
+  margin-left: -176px; /* half of new width */
+}
+
+/* Tile Title (center aligned) */
+.tile-title {
+  font-size: 16px;
+  font-family: var(--font-mono);
+  color: var(--primary);
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.skills-number {
+  font-family: var(--font-mono); /* Same as .tile-title */
+  color: var(--primary);
+}
+
+/* Tile Icons: flexible grid layout inside each tile */
+.tile-icons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px 12px;
+  width: 100%;
+  padding: 4px;
+}
+
+/* Each Tile Item (Skill) */
+.tile-item {
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  flex: 0 0 calc(33.33% - 12px);
+  max-width: 100px;
+}
+.tile-item:hover .skill-icon {
+  transform: scale(1.6);
+}
+.skill-icon {
+  margin-bottom: 2px;
+  font-size: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+}
+.skill-name {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: var(--white);
+  white-space: normal;
+  overflow: hidden;
+  width: 100%;
+  text-align: center;
+}
 
 @media (max-width: 900px) {
   .skills-content {
     width: 95%;
     padding: 0 12px;
-  }
-
-  .tile {
-    flex: 0 0 80%;
   }
 
   .skill-icon {
@@ -137,10 +126,6 @@
 }
 
 @media (max-width: 600px) {
-  .tile {
-    flex: 0 0 80%;
-  }
-
   .skill-icon {
     font-size: 36px;
   }
@@ -148,4 +133,10 @@
   .skill-name {
     width: 70px;
   }
+}
+
+.tile:hover {
+  transform: scale(1.03) rotateY(1deg) rotateX(1deg);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }

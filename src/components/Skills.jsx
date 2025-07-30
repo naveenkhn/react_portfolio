@@ -1,15 +1,12 @@
 "use client";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import './Skills.css';
-import { motion, useScroll, useMotionValue, useMotionValueEvent, animate } from "framer-motion";
-import { FaReact, FaNodeJs, FaPython, FaDocker, FaGithub } from "react-icons/fa";
+import { motion } from "framer-motion";
+import { FaReact } from "react-icons/fa";
 import { 
   SiFlask, 
   SiDjango, 
-  SiCplusplus, 
   SiJavascript, 
-  SiGo, 
-  SiMysql, 
   SiMongodb, 
   SiKubernetes, 
   SiJenkins,
@@ -22,7 +19,6 @@ import {
   SiSplunk,
   SiGit
 } from "react-icons/si";
-import { DiJava, DiGit } from "react-icons/di";
 import { useInView } from "react-intersection-observer";
 
 // Your skills data
@@ -76,130 +72,20 @@ const skillsOrder = [
 // Use the original skillsOrder array directly for display
 const displayedSkillsOrder = skillsOrder;
 
-/**
- * useDynamicMask Hook:
- * Dynamically updates the maskImage so that:
- *  - At extreme left: no blur on left
- *  - At extreme right: no blur on right
- *  - In between: blur on both sides
- */
-function useDynamicMask(scrollXProgress) {
-  const leftInset = "15%";
-  const rightInset = "85%";
-  const transparent = "#0000";
-  const opaque = "#000";
-  
-  // Start with "in-between" blur
-  const maskImage = useMotionValue(
-    `linear-gradient(90deg, ${transparent}, ${opaque} ${leftInset}, ${opaque} ${rightInset}, ${transparent})`
-  );
-
-  // Immediately set to extreme left state if scrollXProgress is 0
-  if (scrollXProgress.get() === 0) {
-    maskImage.set(`linear-gradient(90deg, ${opaque}, ${opaque} ${leftInset}, ${opaque} ${rightInset}, ${transparent})`);
-  }
-  
-  useMotionValueEvent(scrollXProgress, "change", (value) => {
-    if (value === 0) {
-      // Extreme left => no blur on left side
-      animate(
-        maskImage,
-        `linear-gradient(90deg, ${opaque}, ${opaque} ${leftInset}, ${opaque} ${rightInset}, ${transparent})`
-      );
-    } else if (value === 1) {
-      // Extreme right => no blur on right side
-      animate(
-        maskImage,
-        `linear-gradient(90deg, ${transparent}, ${opaque} ${leftInset}, ${opaque} 100%)`
-      );
-    } else {
-      // In between => blur on both sides
-      animate(
-        maskImage,
-        `linear-gradient(90deg, ${transparent}, ${opaque} ${leftInset}, ${opaque} ${rightInset}, ${transparent})`
-      );
-    }
-  });
-
-  return maskImage;
-}
-
 const Skills = () => {
-  // Ref for the horizontally scrollable container
-  const containerRef = useRef(null);
-  const tileRefs = useRef([]);
-
-  // We track the horizontal scroll progress of containerRef
-  const { scrollXProgress } = useScroll({ container: containerRef });
-  const maskImage = useDynamicMask(scrollXProgress);
-
   const { ref, inView } = useInView({ triggerOnce: true });
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Clone the skillsOrder array to create a repeated array for seamless infinite scroll
-  const repeatedSkillsOrder = [...skillsOrder, ...skillsOrder, ...skillsOrder];
-
-  // Updated interval logic using useRef for intervalRef and scrollInterval
-  const scrollInterval = 2000;
-  const intervalRef = useRef(null);
-
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container || tileRefs.current.length === 0) return;
-
-    let index = skillsOrder.length; // start in middle set
-    const tileCount = repeatedSkillsOrder.length;
-
-    const scrollToIndex = (i, behavior = "smooth") => {
-      const tile = tileRefs.current[i];
-      if (!tile) return;
-      const isMobile = window.innerWidth <= 600;
-      const offset = isMobile
-        ? tile.offsetLeft
-        : tile.offsetLeft - (container.offsetWidth - tile.offsetWidth) / 2;
-      container.scrollTo({ left: offset, behavior });
-    };
-
-    scrollToIndex(index, "auto");
-    setCurrentIndex(index);
-
-    const handleMouseEnter = () => clearInterval(intervalRef.current);
-
-    const handleMouseLeave = () => {
-      intervalRef.current = setInterval(() => {
-        index++;
-        scrollToIndex(index);
-
-        if (index >= tileCount - skillsOrder.length) {
-          index = skillsOrder.length;
-          setTimeout(() => scrollToIndex(index, "auto"), scrollInterval);
-        }
-
-        setCurrentIndex(index);
-      }, scrollInterval);
-    };
-
-    container.addEventListener("mouseenter", handleMouseEnter);
-    container.addEventListener("mouseleave", handleMouseLeave);
-
-    intervalRef.current = setInterval(() => {
-      index++;
-      scrollToIndex(index);
-
-      if (index >= tileCount - skillsOrder.length) {
-        index = skillsOrder.length;
-        setTimeout(() => scrollToIndex(index, "auto"), scrollInterval);
+    let angle = 0;
+    const interval = setInterval(() => {
+      angle += 360 / skillsOrder.length;
+      if (document.querySelector(".skills-carousel")) {
+        document.querySelector(".skills-carousel").style.transform = `rotateY(-${angle}deg)`;
       }
-
-      setCurrentIndex(index);
-    }, scrollInterval);
-
-    return () => {
-      container.removeEventListener("mouseenter", handleMouseEnter);
-      container.removeEventListener("mouseleave", handleMouseLeave);
-      clearInterval(intervalRef.current);
-    };
+    }, 2500);
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -216,56 +102,39 @@ const Skills = () => {
           <span className="skills-number">03.</span> Skills
         </h2>
 
-        <div className="skills-scroller-wrapper">
-          <button
-            className="scroll-btn left"
-            onClick={() =>
-              containerRef.current.scrollBy({ left: -300, behavior: "smooth" })
-            }
-          >
-            ‹
-          </button>
-
-          <motion.div
-            className="tiles-container"
-            ref={containerRef}
-            style={{ maskImage }}
-            onWheel={e => {
-              e.preventDefault();
-              containerRef.current.scrollLeft += e.deltaY;
-            }}
-          >
-            {repeatedSkillsOrder.map((category, index) => (
-              <div
-                className="tile"
-                key={`${category}-${index}`}
-                ref={el => tileRefs.current[index] = el}
-              >
-                <h3 className="tile-title">{category}</h3>
-                <div className="tile-icons">
-                  {skillsData[category].map((skill) => (
-                    <div className="tile-item" key={skill.name}>
-                      <div className="skill-icon">{skill.icon}</div>
-                      <div className="skill-name">
-                        <span className={skill.name.length > 10 ? "marquee" : ""}>
-                          {skill.name}
-                        </span>
+        <div className="skills-carousel-wrapper">
+          <div className="skills-carousel">
+            {skillsOrder.map((category, index) => {
+              const angle = (360 / skillsOrder.length) * index;
+              return (
+                <div
+                  className="tile"
+                  key={category}
+                  style={{
+                    transform: `rotateY(${angle}deg) translateZ(320px)`,
+                    width: "352px",
+                    height: "352px"
+                  }}
+                >
+                  <h3 className="tile-title">{category}</h3>
+                  <div
+                    className="tile-icons"
+                  >
+                    {skillsData[category].map((skill) => (
+                      <div className="tile-item" key={skill.name}>
+                        <div className="skill-icon">{skill.icon}</div>
+                        <div className="skill-name">
+                          <span className={skill.name.length > 10 ? "marquee" : ""}>
+                            {skill.name}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </motion.div>
-
-          <button
-            className="scroll-btn right"
-            onClick={() =>
-              containerRef.current.scrollBy({ left: 300, behavior: "smooth" })
-            }
-          >
-            ›
-          </button>
+              );
+            })}
+          </div>
         </div>
       </div>
     </motion.section>
