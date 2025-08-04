@@ -1,0 +1,72 @@
+/* Header: fixed at top with slight vertical offset */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 40px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(10, 25, 47, 0.85);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  transition: transform 0.3s ease;
+}
+
+.header.hidden {
+  transform: translateY(-100%);
+}
+
+/* Home Button: 50px; rotates on hover, text remains static */
+.home-button.diamond {
+  --rot: 45deg;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--primary);
+  transform: rotate(var(--rot));
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+
+.home-button.diamond:hover {
+  --rot: 90deg;
+  transform: rotate(var(--rot)) scale(1.1);
+  box-shadow: 0 0 8px rgba(100, 255, 218, 0.6);
+}
+
+.home-button.diamond .diamond-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(calc(-1 * var(--rot)));
+  color: var(--primary);
+  transition: transform 0.3s ease;
+}
+
+/* Navigation */
+.nav-links {
+  display: flex;
+  align-items: center;
+}
+
+.nav-item {
+  text-decoration: none;
+  color: #a8b2d1;
+  font-size: 14px;
+  margin-left: 20px;
+  font-weight: var(--font-weight-regular);
+  transition: color 0.3s ease;
+}
+
+.nav-item:hover {
+  color: var(--primary);
+}
+
+.nav-item span {
+  font-family: var(--font-mono);
+  color: var(--primary);
+  margin-right: 5px;
+  font-size: 16px;
+}

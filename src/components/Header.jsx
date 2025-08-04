@@ -1,6 +1,7 @@
 // Header component that animates in on load and hides on scroll down
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import './Header.css';
 
 const Header = () => {
   const [showHeader, setShowHeader] = useState(true);
