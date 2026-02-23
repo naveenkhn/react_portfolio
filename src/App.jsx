@@ -6,6 +6,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Loading from './components/Loading';
 import Experience from './components/Experience';
+import Work from './components/Work';
 import { useState } from 'react';
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
             <About />
             <Experience />            
             <Skills />
+            <Work />
             <Contact />
           </main>
           <Footer />
