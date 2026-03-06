@@ -4,7 +4,14 @@ const Footer = () => {
   const [views, setViews] = useState(null);
 
   useEffect(() => {
-    fetch('https://f9qw6hmni6.execute-api.ap-south-1.amazonaws.com/Prod/visit/')
+    const site = 'portfolio';
+    const path = window.location.pathname || '/';
+    const page = path === '/' || path.endsWith('/') ? path : `${path}/`;
+
+    const url = new URL('https://f9qw6hmni6.execute-api.ap-south-1.amazonaws.com/Prod/visit/');
+    url.search = new URLSearchParams({ site, page }).toString();
+
+    fetch(url.toString())
       .then(response => response.json())
       .then(data => setViews(data.views))
       .catch(error => {
