@@ -16,12 +16,16 @@
   }
   
 .skills-carousel-wrapper {
+  --tile-size: 352px;
+  --carousel-radius: 320px;
+  --carousel-width: 800px;
+  --carousel-height: 560px;
   display: flex;
   justify-content: center;
   perspective: 1500px;
   perspective-origin: center;
   overflow: visible;
-  height: 560px;
+  height: var(--carousel-height);
   margin-top: 20px;
 }
 
@@ -29,7 +33,7 @@
   position: relative;
   transform-style: preserve-3d;
   transition: transform 1s ease-in-out;
-  width: 800px;
+  width: min(var(--carousel-width), 100%);
   margin: 0 auto;
   height: 100%;
 }
@@ -41,8 +45,8 @@
   border: 1px solid var(--secondary);
   border-radius: 8px;
   padding: 12px;
-  width: 22rem;
-  height: 22rem;
+  width: var(--tile-size);
+  height: var(--tile-size);
   position: absolute;
   top: 50%;
   left: 50%;
@@ -53,8 +57,8 @@
   align-items: center;
   justify-content: start;
   overflow: hidden;
-  margin-top: -176px; /* half of new height */
-  margin-left: -176px; /* half of new width */
+  margin-top: calc(var(--tile-size) / -2);
+  margin-left: calc(var(--tile-size) / -2);
 }
 
 /* Tile Title (center aligned) */
@@ -116,6 +120,14 @@
     padding: 0 12px;
   }
 
+  .skills-carousel-wrapper {
+    --tile-size: 320px;
+    --carousel-radius: 280px;
+    --carousel-width: 680px;
+    --carousel-height: 520px;
+    perspective: 1200px;
+  }
+
   .skill-icon {
     font-size: 48px;
   }
@@ -126,6 +138,31 @@
 }
 
 @media (max-width: 600px) {
+  .skills-carousel-wrapper {
+    --tile-size: clamp(260px, 84vw, 320px);
+    --carousel-radius: clamp(220px, 62vw, 280px);
+    --carousel-width: 100%;
+    --carousel-height: clamp(460px, 125vw, 540px);
+    perspective: 900px;
+    overflow: hidden;
+  }
+
+  .tile {
+    padding: 10px;
+  }
+
+  .tile-title {
+    margin-bottom: 16px;
+  }
+
+  .tile-icons {
+    gap: 12px 8px;
+  }
+
+  .tile-item {
+    max-width: 88px;
+  }
+
   .skill-icon {
     font-size: 36px;
   }

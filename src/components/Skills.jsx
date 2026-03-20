@@ -127,9 +127,7 @@ const Skills = () => {
                   className="tile"
                   key={category}
                   style={{
-                    transform: `rotateY(${angle}deg) translateZ(320px)`,
-                    width: "352px",
-                    height: "352px"
+                    transform: `rotateY(${angle}deg) translateZ(var(--carousel-radius))`,
                   }}
                 >
                   <h3 className="tile-title">{category}</h3>
