@@ -219,6 +219,7 @@
 
   .tagline-container h2 {
     font-size: clamp(14px, 7vw, 22px);
+    text-wrap: balance;
   }
 
   .about-content {
@@ -226,17 +227,39 @@
   }
 
   .about-paragraph {
-    font-size: clamp(13px, 3vw, 16px);
+    font-size: clamp(14px, 3.3vw, 16px);
+    text-align: left;
+    text-wrap: pretty;
+    hyphens: auto;
+    overflow-wrap: break-word;
+  }
+
+  .about-text-left p {
+    line-height: 1.9;
+    margin-bottom: 12px;
+  }
+
+  /* Mobile: greeting + tagline, then centered photo, then text, then links */
+  .about-text-right {
+    order: 1;
+    margin-top: 0;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .about-text-left {
+    order: 2;
   }
 
   .profile-pic-container {
-    width: 110px;
-    height: 110px;
+    width: clamp(120px, 42vw, 160px);
+    height: clamp(120px, 42vw, 160px);
+    margin: 0 auto;
   }
 
   .social-and-resume {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
   }
 }
