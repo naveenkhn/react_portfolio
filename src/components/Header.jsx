@@ -1,11 +1,26 @@
 // Header component that animates in on load and hides on scroll down
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import './Header.css';
 
 const Header = () => {
   const [showHeader, setShowHeader] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
+  const [indicator, setIndicator] = useState({ left: 0, width: 0, opacity: 0 });
+  const navRef = useRef(null);
+  const navItemRefs = useRef({});
+
+  const navItems = useMemo(
+    () => [
+      { id: 'home', href: '#home', label: 'About' },
+      { id: 'experience', href: '#experience', label: 'Experience' },
+      { id: 'skills', href: '#skills', label: 'Skills' },
+      { id: 'work', href: '#work', label: 'Work' },
+      { id: 'contact', href: '#contact', label: 'Contact' },
+    ],
+    []
+  );
 
   // Show/hide header on scroll: hides when scrolling down, shows when scrolling up or near top
   // Hide header on scroll
@@ -46,6 +61,61 @@ const Header = () => {
       document.body.style.overflow = prevOverflow;
     };
   }, [menuOpen]);
+
+  useEffect(() => {
+    const ids = navItems.map((item) => item.id);
+    const elements = ids
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
+
+    if (elements.length === 0) return undefined;
+
+    // Initialize from hash if present.
+    const hashId = window.location.hash?.replace('#', '');
+    if (hashId && ids.includes(hashId)) setActiveSection(hashId);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible[0]?.target?.id) setActiveSection(visible[0].target.id);
+      },
+      {
+        root: null,
+        // Bias towards the top portion of the viewport to match "reading position"
+        // and account for the fixed header.
+        rootMargin: '-20% 0px -65% 0px',
+        threshold: [0, 0.1, 0.25, 0.5, 0.75],
+      }
+    );
+
+    elements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [navItems]);
+
+  useEffect(() => {
+    const updateIndicator = () => {
+      const navEl = navRef.current;
+      const activeEl = navItemRefs.current[activeSection];
+      if (!navEl || !activeEl) {
+        setIndicator((prev) => ({ ...prev, opacity: 0 }));
+        return;
+      }
+      const navRect = navEl.getBoundingClientRect();
+      const itemRect = activeEl.getBoundingClientRect();
+      const left = Math.round(itemRect.left - navRect.left);
+      const width = Math.round(itemRect.width);
+      setIndicator({ left, width, opacity: 1 });
+    };
+
+    const raf = window.requestAnimationFrame(updateIndicator);
+    window.addEventListener('resize', updateIndicator);
+    return () => {
+      window.cancelAnimationFrame(raf);
+      window.removeEventListener('resize', updateIndicator);
+    };
+  }, [activeSection]);
 
   // framer-motion variant for staggered animation of nav items
   const navVariants = {
@@ -92,12 +162,34 @@ const Header = () => {
           variants={navVariants}
           initial="hidden"
           animate="show"
+          ref={navRef}
         >
-          <motion.a href="#home" className="nav-item" variants={itemVariants}><span>01.</span> About</motion.a>
-          <motion.a href="#experience" className="nav-item" variants={itemVariants}><span>02.</span> Experience</motion.a>
-          <motion.a href="#skills" className="nav-item" variants={itemVariants}><span>03.</span> Skills</motion.a>
-          <motion.a href="#work" className="nav-item" variants={itemVariants}><span>04.</span> Work</motion.a>
-          <motion.a href="#contact" className="nav-item" variants={itemVariants}><span>05.</span> Contact</motion.a>
+          {navItems.map((item) => (
+            <motion.a
+              key={item.id}
+              href={item.href}
+              className={`nav-item ${activeSection === item.id ? 'active' : ''}`}
+              variants={itemVariants}
+              ref={(el) => {
+                if (el) navItemRefs.current[item.id] = el;
+              }}
+              onClick={() => {
+                setActiveSection(item.id);
+                setMenuOpen(false);
+              }}
+            >
+              {item.label}
+            </motion.a>
+          ))}
+          <span
+            className="nav-indicator"
+            aria-hidden="true"
+            style={{
+              left: `${indicator.left}px`,
+              width: `${indicator.width}px`,
+              opacity: indicator.opacity,
+            }}
+          />
         </motion.nav>
       </motion.header>
 
@@ -112,21 +204,19 @@ const Header = () => {
           aria-label="Mobile navigation"
           onClick={(e) => e.stopPropagation()}
         >
-          <a className="mobile-menu-item" href="#home" onClick={() => setMenuOpen(false)}>
-            <span className="mobile-menu-num">01.</span> About
-          </a>
-          <a className="mobile-menu-item" href="#experience" onClick={() => setMenuOpen(false)}>
-            <span className="mobile-menu-num">02.</span> Experience
-          </a>
-          <a className="mobile-menu-item" href="#skills" onClick={() => setMenuOpen(false)}>
-            <span className="mobile-menu-num">03.</span> Skills
-          </a>
-          <a className="mobile-menu-item" href="#work" onClick={() => setMenuOpen(false)}>
-            <span className="mobile-menu-num">04.</span> Work
-          </a>
-          <a className="mobile-menu-item" href="#contact" onClick={() => setMenuOpen(false)}>
-            <span className="mobile-menu-num">05.</span> Contact
-          </a>
+          {navItems.map((item) => (
+            <a
+              key={item.id}
+              className={`mobile-menu-item ${activeSection === item.id ? 'active' : ''}`}
+              href={item.href}
+              onClick={() => {
+                setActiveSection(item.id);
+                setMenuOpen(false);
+              }}
+            >
+              {item.label}
+            </a>
+          ))}
         </nav>
       </div>
     </>
