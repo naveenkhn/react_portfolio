@@ -12,48 +12,86 @@
   font-size: clamp(20px, 3vw, 32px);
   color: var(--white);
   margin-bottom: 40px;
-  display: flex;
-  align-items: center;
-  gap: 20px;
+  text-align: center;
+  position: relative;
+  padding-bottom: 14px;
 }
 
-.experience-number {
-  color: var(--primary);
-  font-family: var(--font-mono);
-  font-size: clamp(16px, 2vw, 24px);
+.experience-title::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  height: 2px;
+  width: 110px;
+  border-radius: 2px;
+  background: linear-gradient(
+    90deg,
+    rgba(100, 255, 218, 0) 0%,
+    rgba(100, 255, 218, 0.9) 50%,
+    rgba(100, 255, 218, 0) 100%
+  );
 }
 
 .experience-container {
   display: flex;
-  gap: 28px; /* tighter than 40px, adjust to taste */
+  flex-direction: column;
+  gap: 18px;
 }
 
 .experience-tabs {
-  flex-shrink: 0;
-  width: 200px;
-  max-height: 300px;
-  overflow-y: auto;
-  border-left: 1px solid var(--secondary);
+  width: 100%;
+  border-bottom: 1px solid var(--secondary);
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
+  overflow-x: auto;
 }
 
 .experience-tab {
   background: none;
   border: none;
-  padding: 12px 20px;
+  padding: 12px 16px;
   font-family: var(--font-mono);
   color: var(--secondary);
-  text-align: left;
+  font-size: clamp(15px, 1.25vw, 18px);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+  text-align: center;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.2s ease, color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  white-space: nowrap;
+  flex: 1;
+  position: relative;
+}
+
+.experience-tab:focus {
+  outline: none;
+}
+
+.experience-tab:focus-visible {
+  outline: none;
 }
 
 .experience-tab.active {
   background-color: rgba(100, 255, 218, 0.07);
   color: var(--primary);
-  border-left: 2px solid var(--primary);
-  border-radius: 0 5px 5px 0;
+  border-radius: 8px;
+}
+
+.experience-tab.active::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 9px;
+  bottom: 9px;
+  width: 2px;
+  border-radius: 2px;
+  background: rgba(100, 255, 218, 0.9);
 }
 
 .experience-details {
@@ -76,16 +114,17 @@
 .experience-role {
   font-size: clamp(17px, 2.2vw, 26px);
   color: var(--white);
+  line-height: 1.15;
 }
 
 .experience-period,
 .experience-project {
-  font-size: 14px;
+  font-size: clamp(14px, 1vw, 16px);
   color: var(--secondary);
 }
 
 .experience-client {
-  font-size: 14px;
+  font-size: clamp(14px, 1vw, 16px);
   color: var(--secondary);
 }
 
@@ -98,7 +137,7 @@
 
 .experience-product-image img {
   max-width: 100%;
-  max-height: 140px;
+  max-height: 200px;
   object-fit: contain;
   border-radius: 8px;
   display: block;
@@ -106,9 +145,9 @@
 }
 
 .experience-tech {
-  font-size: 15px;
+  font-size: clamp(14px, 1vw, 16px);
   color: var(--primary);
-  margin-bottom: 15px;
+  margin-top: 12px;
   font-family: var(--font-mono);
 }
 
@@ -163,24 +202,27 @@
   .experience-content {
     width: 95%;
   }
-  .experience-container {
-    flex-direction: column;
-    gap: 18px;
-  }
   .experience-tabs {
-    width: 100%;
     max-width: 100vw;
-    flex-direction: row;
-    border-left: none;
-    border-top: 1px solid var(--secondary);
-    overflow-x: auto;
-    max-height: unset;
+  }
+  .experience-tab {
+    text-align: center;
+    padding: 12px 10px;
+    white-space: nowrap;
   }
   .experience-details {
     width: 100%;
   }
   .experience-role-block {
     grid-template-columns: 100%;
+  }
+
+  .experience-product-image {
+    height: auto;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 10px;
+    margin-bottom: 0;
   }
 }
 
@@ -190,14 +232,24 @@
   }
   .experience-title {
     font-size: clamp(17px, 5vw, 24px);
-    gap: 10px;
   }
   .experience-container {
     gap: 10px;
   }
+  .experience-tab {
+    font-size: 14px;
+    padding: 10px 8px;
+  }
+  .experience-role-block {
+    margin-bottom: 12px;
+  }
   .experience-product-image img {
     max-width: 90vw;
-    max-height: 80px;
+    max-height: 130px;
+  }
+  .experience-product-image {
+    margin-top: 10px;
+    margin-bottom: 0;
   }
   .experience-role {
     font-size: clamp(14px, 5vw, 18px);

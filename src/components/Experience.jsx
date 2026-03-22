@@ -95,9 +95,7 @@ function Experience() {
       transition={{ duration: 0.5, delay: 0.9 }}
     >
       <div className="experience-content">
-        <h2 className="experience-title">
-          <span className="experience-number">02.</span> Experience
-        </h2>
+        <h2 className="experience-title">Experience</h2>
         <div className="experience-container">
           <div className="experience-tabs">
             {companies.map((company, index) => (
@@ -128,6 +126,7 @@ function Experience() {
                 <div className="experience-period">{companies[activeIndex].period}</div>
                 <div className="experience-project">{companies[activeIndex].project}</div>
                 <div className="experience-client">{companies[activeIndex].client}</div>
+                <div className="experience-tech">{companies[activeIndex].tech}</div>
               </div>
 
               <div className="experience-product-image">
@@ -137,7 +136,6 @@ function Experience() {
                 />
               </div>
             </div>
-            <div className="experience-tech">{companies[activeIndex].tech}</div>
             <ul className="experience-points">
               {companies[activeIndex].points.map((point, index) => (
                 <li key={index}>
