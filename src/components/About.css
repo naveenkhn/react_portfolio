@@ -260,8 +260,28 @@
   }
 
   .social-and-resume {
-    flex-direction: row;
+    /* Mobile: make icons + resume evenly distributed */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     align-items: center;
-    gap: 16px;
+    gap: 12px;
+  }
+
+  /* Let the icon links participate directly in the 4-col grid */
+  .social-links-about {
+    display: contents;
+  }
+
+  .social-links-about a {
+    justify-self: center;
+    font-size: 28px;
+  }
+
+  .resume-button {
+    justify-self: stretch;
+    text-align: center;
+    font-size: 15px;
+    padding: 10px 0;
+    border-radius: 6px;
   }
 }
