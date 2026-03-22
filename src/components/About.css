@@ -218,8 +218,10 @@
   }
 
   .tagline-container h2 {
-    font-size: clamp(14px, 7vw, 22px);
-    text-wrap: balance;
+    font-size: clamp(14px, 6.2vw, 20px);
+    line-height: 1.2;
+    text-wrap: normal;
+    max-width: none;
   }
 
   .about-content {

@@ -112,11 +112,21 @@ const Header = () => {
           aria-label="Mobile navigation"
           onClick={(e) => e.stopPropagation()}
         >
-          <a className="mobile-menu-item" href="#home" onClick={() => setMenuOpen(false)}>About</a>
-          <a className="mobile-menu-item" href="#experience" onClick={() => setMenuOpen(false)}>Experience</a>
-          <a className="mobile-menu-item" href="#skills" onClick={() => setMenuOpen(false)}>Skills</a>
-          <a className="mobile-menu-item" href="#work" onClick={() => setMenuOpen(false)}>Work</a>
-          <a className="mobile-menu-item" href="#contact" onClick={() => setMenuOpen(false)}>Contact</a>
+          <a className="mobile-menu-item" href="#home" onClick={() => setMenuOpen(false)}>
+            <span className="mobile-menu-num">01.</span> About
+          </a>
+          <a className="mobile-menu-item" href="#experience" onClick={() => setMenuOpen(false)}>
+            <span className="mobile-menu-num">02.</span> Experience
+          </a>
+          <a className="mobile-menu-item" href="#skills" onClick={() => setMenuOpen(false)}>
+            <span className="mobile-menu-num">03.</span> Skills
+          </a>
+          <a className="mobile-menu-item" href="#work" onClick={() => setMenuOpen(false)}>
+            <span className="mobile-menu-num">04.</span> Work
+          </a>
+          <a className="mobile-menu-item" href="#contact" onClick={() => setMenuOpen(false)}>
+            <span className="mobile-menu-num">05.</span> Contact
+          </a>
         </nav>
       </div>
     </>

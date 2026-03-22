@@ -115,7 +115,7 @@
 }
 
 .menu-icon.open {
-  opacity: 0;
+  background: transparent;
 }
 
 .menu-icon.open::before {
@@ -150,13 +150,14 @@
   position: absolute;
   right: 12px;
   top: 76px;
-  width: min(84vw, 340px);
-  border-radius: 14px;
+  width: min(62vw, 240px);
+  border-radius: 12px;
   background: rgba(10, 25, 47, 0.96);
   border: 1px solid rgba(148, 163, 184, 0.22);
   backdrop-filter: blur(10px);
-  padding: 12px;
+  padding: 10px;
   transform: translateY(-8px);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.35);
 }
 
 .mobile-menu-item {
@@ -166,6 +167,14 @@
   color: #a8b2d1;
   text-decoration: none;
   font-size: 15px;
+  font-weight: var(--font-weight-regular);
+}
+
+.mobile-menu-num {
+  font-family: var(--font-mono);
+  color: rgba(100, 255, 218, 0.85);
+  margin-right: 10px;
+  font-size: 13px;
 }
 
 .mobile-menu-item:hover {
@@ -173,9 +182,51 @@
   color: var(--primary);
 }
 
+.mobile-menu-item:active {
+  background: rgba(100, 255, 218, 0.1);
+  transform: translateX(2px);
+}
+
+.mobile-menu-item:focus-visible {
+  outline: 2px solid rgba(100, 255, 218, 0.45);
+  outline-offset: 2px;
+}
+
+@media (max-width: 900px) {
+  .mobile-menu-item {
+    position: relative;
+  }
+
+  .mobile-menu-item::before {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 10px;
+    bottom: 10px;
+    width: 2px;
+    border-radius: 2px;
+    background: transparent;
+  }
+
+  .mobile-menu-item:active::before {
+    background: rgba(100, 255, 218, 0.8);
+  }
+}
+
 @media (max-width: 900px) {
   .header {
-    padding: 18px 16px;
+    padding: 14px 14px;
+    border-bottom: 1px solid rgba(100, 255, 218, 0.12);
+  }
+
+  .home-button.diamond {
+    width: 30px;
+    height: 30px;
+    border-width: 2px;
+  }
+
+  .home-button.diamond .diamond-text {
+    font-size: 13px;
   }
 
   .nav-links {
@@ -186,9 +237,39 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    border-width: 2px;
+  }
+
+  /* Ensure equal inset from left/right edges */
+  .home-button.diamond,
+  .menu-button {
+    margin: 0;
+  }
+
+  /* Make the hamburger glyph lighter to match the smaller diamond */
+  .menu-icon,
+  .menu-icon::before,
+  .menu-icon::after {
+    width: 16px;
+  }
+
+  .menu-icon::before {
+    top: calc(50% - 6px);
+  }
+
+  .menu-icon::after {
+    top: calc(50% + 6px);
   }
 
   .mobile-menu-overlay {
     display: block;
+  }
+
+  .mobile-menu {
+    top: 56px;
+    right: 14px;
   }
 }
