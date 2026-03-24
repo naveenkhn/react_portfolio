@@ -114,9 +114,7 @@ const Skills = () => {
       transition={{ duration: 0.5, delay: 1.2 }}
     >
       <div className="skills-content">
-        <h2 className="skills-title">
-          <span className="skills-number">03.</span> Skills
-        </h2>
+        <h2 className="skills-title">Skills</h2>
 
         <div className="skills-carousel-wrapper">
           <div className="skills-carousel" ref={carouselRef}>

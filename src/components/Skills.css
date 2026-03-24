@@ -10,9 +10,30 @@
   
   /* Section Title (center aligned) */
   .skills-title {
+    font-size: clamp(20px, 3vw, 32px);
+    color: var(--white);
     text-align: center;
     width: 100%;
     margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 14px;
+  }
+
+  .skills-title::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    height: 3px;
+    width: 180px;
+    border-radius: 2px;
+    background: linear-gradient(
+      90deg,
+      rgba(100, 255, 218, 0) 0%,
+      rgba(100, 255, 218, 0.9) 50%,
+      rgba(100, 255, 218, 0) 100%
+    );
   }
   
 .skills-carousel-wrapper {
@@ -68,11 +89,6 @@
   color: var(--primary);
   margin-bottom: 24px;
   text-align: center;
-}
-
-.skills-number {
-  font-family: var(--font-mono); /* Same as .tile-title */
-  color: var(--primary);
 }
 
 /* Tile Icons: flexible grid layout inside each tile */
@@ -138,37 +154,62 @@
 }
 
 @media (max-width: 600px) {
+  .skills-section {
+    padding: 80px 0;
+    min-height: 100svh;
+  }
+
+  .skills-title {
+    font-size: clamp(17px, 5vw, 24px);
+    margin-bottom: 48px;
+  }
+
+  .skills-title::after {
+    width: 120px;
+    height: 2px;
+  }
+
   .skills-carousel-wrapper {
-    --tile-size: clamp(260px, 84vw, 320px);
-    --carousel-radius: clamp(220px, 62vw, 280px);
-    --carousel-width: 100%;
-    --carousel-height: clamp(460px, 125vw, 540px);
-    perspective: 900px;
-    overflow: hidden;
+    /* Pull the faces closer together on phones so the 3D ring stays inside the section. */
+    --tile-size: 352px;
+    --carousel-radius: 272px;
+    --carousel-width: 700px;
+    --carousel-height: 560px;
+    perspective: 1500px;
+    overflow: visible;
+    /* Keep the full section height, but nudge the carousel lower within it. */
+    transform: translateY(28px) scale(0.64);
+    transform-origin: 50% 0%;
+    width: 100%;
+    height: calc(var(--carousel-height) * 0.82);
+    margin-top: 32px;
+    margin-bottom: 0;
   }
 
   .tile {
-    padding: 10px;
+    padding: 12px;
   }
 
   .tile-title {
-    margin-bottom: 16px;
+    margin-bottom: 24px;
+    font-size: 16px;
   }
 
   .tile-icons {
-    gap: 12px 8px;
+    gap: 16px 12px;
   }
 
   .tile-item {
-    max-width: 88px;
+    max-width: 100px;
   }
 
   .skill-icon {
-    font-size: 36px;
+    font-size: 48px;
+    height: 48px;
   }
 
   .skill-name {
-    width: 70px;
+    width: 80px;
   }
 }
 
