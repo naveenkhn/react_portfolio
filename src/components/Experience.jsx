@@ -34,9 +34,9 @@ const companies = [
     url: 'https://www.harman.com/',
     tech: 'C++, Python, Qt, Google Test | QNX Platform',
     image: '/assets/Goldwing.jpg',
-    project: 'Integrated Navigation System',
+    project: 'Navigation system for Gold Wing superbike',
     projectUrl: 'https://powersports.honda.com/motorcycle/touring/gold-wing/features#technology',
-    client: 'Honda Gold Wing 1833cc Super Bike',
+    client: 'HONDA',
     summary: 'Developed features for an infotainment system offering navigation, phone integration, and multimedia for Honda’s flagship touring motorcycle.',     
     points: [
         'Designed and developed key navigation features like favorites, previous destinations, GPX import/export, and real-time guidance.',
