@@ -17,7 +17,7 @@ const Contact = () => {
     >
       <div className="contact-content">
         <div className="contact-title">
-          <h2>Get In Touch</h2>
+          <h2>Contact</h2>
         </div>
 
         <p className="contact-description">

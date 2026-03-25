@@ -19,9 +19,7 @@ const Work = () => {
       transition={{ duration: 0.5, delay: 0.3 }}
     >
       <div className="work-content">
-        <h2 className="work-title">
-          <span className="work-number">04.</span> Work
-        </h2>
+        <h2 className="work-title">Work</h2>
 
         <div className="work-card">
           <div className="work-card-header">

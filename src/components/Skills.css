@@ -12,8 +12,11 @@
   .skills-title {
     font-size: clamp(20px, 3vw, 32px);
     color: var(--white);
+    display: block;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
     text-align: center;
-    width: 100%;
     margin-bottom: 20px;
     position: relative;
     padding-bottom: 14px;
@@ -26,7 +29,7 @@
     bottom: 0;
     transform: translateX(-50%);
     height: 3px;
-    width: 180px;
+    width: 100%;
     border-radius: 2px;
     background: linear-gradient(
       90deg,
@@ -37,7 +40,8 @@
   }
   
 .skills-carousel-wrapper {
-  --tile-size: 352px;
+  --tile-width: 352px;
+  --tile-height: 352px;
   --carousel-radius: 320px;
   --carousel-width: 800px;
   --carousel-height: 560px;
@@ -57,6 +61,11 @@
   width: min(var(--carousel-width), 100%);
   margin: 0 auto;
   height: 100%;
+  will-change: transform;
+}
+
+.skills-carousel.touch-enabled {
+  transition-duration: 0.55s;
 }
 
 /* Each Tile (Skill Category) */
@@ -66,8 +75,8 @@
   border: 1px solid var(--secondary);
   border-radius: 8px;
   padding: 12px;
-  width: var(--tile-size);
-  height: var(--tile-size);
+  width: var(--tile-width);
+  height: var(--tile-height);
   position: absolute;
   top: 50%;
   left: 50%;
@@ -78,8 +87,10 @@
   align-items: center;
   justify-content: start;
   overflow: hidden;
-  margin-top: calc(var(--tile-size) / -2);
-  margin-left: calc(var(--tile-size) / -2);
+  margin-top: calc(var(--tile-height) / -2);
+  margin-left: calc(var(--tile-width) / -2);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 /* Tile Title (center aligned) */
@@ -89,6 +100,8 @@
   color: var(--primary);
   margin-bottom: 24px;
   text-align: center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 /* Tile Icons: flexible grid layout inside each tile */
@@ -96,9 +109,12 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-content: flex-start;
   gap: 16px 12px;
   width: 100%;
   padding: 4px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 /* Each Tile Item (Skill) */
@@ -119,6 +135,14 @@
   align-items: center;
   justify-content: center;
   height: 48px;
+  transform: translateZ(0);
+}
+
+.skill-icon img,
+.skill-icon svg,
+.skill-icon i {
+  max-width: 100%;
+  max-height: 100%;
 }
 .skill-name {
   font-size: 11px;
@@ -132,12 +156,12 @@
 
 @media (max-width: 900px) {
   .skills-content {
-    width: 95%;
     padding: 0 12px;
   }
 
   .skills-carousel-wrapper {
-    --tile-size: 320px;
+    --tile-width: 320px;
+    --tile-height: 320px;
     --carousel-radius: 280px;
     --carousel-width: 680px;
     --carousel-height: 520px;
@@ -154,62 +178,64 @@
 }
 
 @media (max-width: 600px) {
+  .skills-content {
+    width: min(90%, 1100px);
+    padding: 0 16px;
+  }
+
   .skills-section {
-    padding: 80px 0;
-    min-height: 100svh;
+    min-height: 74svh;
   }
 
   .skills-title {
     font-size: clamp(17px, 5vw, 24px);
-    margin-bottom: 48px;
-  }
-
-  .skills-title::after {
-    width: 120px;
-    height: 2px;
   }
 
   .skills-carousel-wrapper {
-    /* Pull the faces closer together on phones so the 3D ring stays inside the section. */
-    --tile-size: 352px;
-    --carousel-radius: 272px;
-    --carousel-width: 700px;
-    --carousel-height: 560px;
+    /* Mobile uses a 2 x 4 tile grid for clearer icons and labels. */
+    --tile-width: 224px;
+    --tile-height: 324px;
+    --carousel-radius: 170px;
+    --carousel-width: 382px;
+    --carousel-height: 396px;
     perspective: 1500px;
     overflow: visible;
-    /* Keep the full section height, but nudge the carousel lower within it. */
-    transform: translateY(28px) scale(0.64);
+    transform: translateY(8px);
     transform-origin: 50% 0%;
     width: 100%;
-    height: calc(var(--carousel-height) * 0.82);
-    margin-top: 32px;
+    height: calc(var(--carousel-height) + 32px);
+    margin-top: 12px;
     margin-bottom: 0;
+    touch-action: pan-y;
   }
 
   .tile {
-    padding: 12px;
+    padding: 10px;
   }
 
   .tile-title {
-    margin-bottom: 24px;
-    font-size: 16px;
+    margin-bottom: 14px;
+    font-size: 13px;
   }
 
   .tile-icons {
-    gap: 16px 12px;
+    gap: 12px 12px;
+    padding: 4px 2px 2px;
   }
 
   .tile-item {
-    max-width: 100px;
+    max-width: 82px;
+    flex: 0 0 calc(50% - 12px);
   }
 
   .skill-icon {
-    font-size: 48px;
-    height: 48px;
+    font-size: 38px;
+    height: 38px;
   }
 
   .skill-name {
-    width: 80px;
+    width: 76px;
+    font-size: 10px;
   }
 }
 
@@ -221,4 +247,20 @@
 
 .skills-carousel:hover {
   animation-play-state: paused;
+}
+
+.skills-swipe-hint {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .skills-swipe-hint {
+    display: block;
+    margin-top: 8px;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--secondary);
+    letter-spacing: 0.04em;
+  }
 }

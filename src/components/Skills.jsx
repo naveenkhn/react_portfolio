@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import './Skills.css';
 import { motion } from "framer-motion";
 import { FaReact } from "react-icons/fa";
@@ -62,47 +62,94 @@ const skillsOrder = [
   "Databases"
 ];
 
+const MOBILE_BREAKPOINT = 600;
+const SWIPE_THRESHOLD = 36;
+const ROTATION_STEP = 360 / skillsOrder.length;
+const WRAP_EPSILON = 0.01;
 
 const Skills = () => {
   const { ref, inView } = useInView({ triggerOnce: true });
-  const carouselRef = useRef(null);
-
+  const [rotationStep, setRotationStep] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const touchStateRef = useRef({ startX: null, handled: false });
+  const intervalRef = useRef(null);
 
   useEffect(() => {
-    let angle = 0;
-    let intervalId = null;
-    const rotate = () => {
-      angle += 360 / skillsOrder.length;
-      if (carouselRef.current) {
-        carouselRef.current.style.transform = `rotateY(-${angle}deg)`;
-      }
+    const mediaQuery = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`);
+    const updateIsMobile = (event) => {
+      setIsMobile(event.matches);
     };
 
-    const startRotation = () => {
-      if (!intervalId) {
-        intervalId = setInterval(rotate, 2500);
-      }
-    };
-
-    const stopRotation = () => {
-      clearInterval(intervalId);
-      intervalId = null;
-    };
-
-    const carousel = carouselRef.current;
-    carousel.addEventListener("mouseenter", stopRotation);
-    carousel.addEventListener("mouseleave", startRotation);
-
-    startRotation();
+    updateIsMobile(mediaQuery);
+    mediaQuery.addEventListener("change", updateIsMobile);
 
     return () => {
-      stopRotation();
-      if (carousel) {
-        carousel.removeEventListener("mouseenter", stopRotation);
-        carousel.removeEventListener("mouseleave", startRotation);
-      }
+      mediaQuery.removeEventListener("change", updateIsMobile);
     };
   }, []);
+
+  useEffect(() => {
+    const stopRotation = () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+
+    stopRotation();
+
+    if (!isMobile) {
+      intervalRef.current = setInterval(() => {
+        setRotationStep((current) => current + 1);
+      }, 2500);
+    }
+
+    return stopRotation;
+  }, [isMobile]);
+
+  const rotateToPrevious = () => {
+    setRotationStep((current) => current - 1);
+  };
+
+  const rotateToNext = () => {
+    setRotationStep((current) => current + 1);
+  };
+
+  const rawRotationDegrees = -rotationStep * ROTATION_STEP;
+  const normalizedDegrees = ((rawRotationDegrees % 360) + 360) % 360;
+  const renderedRotationDegrees =
+    normalizedDegrees === 0 && rotationStep !== 0
+      ? rawRotationDegrees - WRAP_EPSILON
+      : rawRotationDegrees;
+
+  const handleTouchStart = (event) => {
+    touchStateRef.current = {
+      startX: event.touches[0]?.clientX ?? null,
+      handled: false,
+    };
+  };
+
+  const handleTouchMove = (event) => {
+    const { startX, handled } = touchStateRef.current;
+    if (startX === null || handled) return;
+
+    const touchX = event.touches[0]?.clientX ?? startX;
+    const deltaX = touchX - startX;
+
+    if (Math.abs(deltaX) < SWIPE_THRESHOLD) return;
+
+    if (deltaX < 0) {
+      rotateToNext();
+    } else {
+      rotateToPrevious();
+    }
+
+    touchStateRef.current.handled = true;
+  };
+
+  const handleTouchEnd = () => {
+    touchStateRef.current = { startX: null, handled: false };
+  };
 
   return (
     <motion.section
@@ -116,8 +163,17 @@ const Skills = () => {
       <div className="skills-content">
         <h2 className="skills-title">Skills</h2>
 
-        <div className="skills-carousel-wrapper">
-          <div className="skills-carousel" ref={carouselRef}>
+        <div
+          className="skills-carousel-wrapper"
+          onTouchStart={isMobile ? handleTouchStart : undefined}
+          onTouchMove={isMobile ? handleTouchMove : undefined}
+          onTouchEnd={isMobile ? handleTouchEnd : undefined}
+          onTouchCancel={isMobile ? handleTouchEnd : undefined}
+        >
+          <div
+            className={`skills-carousel ${isMobile ? 'touch-enabled' : ''}`}
+            style={{ transform: `rotateY(${renderedRotationDegrees}deg)` }}
+          >
             {skillsOrder.map((category, index) => {
               const angle = (360 / skillsOrder.length) * index;
               return (
@@ -148,6 +204,7 @@ const Skills = () => {
             })}
           </div>
         </div>
+        {isMobile && <p className="skills-swipe-hint">Swipe to explore</p>}
       </div>
     </motion.section>
   );

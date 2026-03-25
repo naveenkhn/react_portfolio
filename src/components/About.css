@@ -175,10 +175,6 @@
 
 /* 🔹 Responsive Fixes */
 @media (max-width: 900px) {
-  .about-section-content {
-    width: 95%;
-  }
-
   .about-content {
     flex-direction: column;
     gap: 30px;
@@ -205,8 +201,9 @@
 }
 
 @media (max-width: 600px) {
-  .about-section {
-    padding: 60px 0;
+  .about-section-content {
+    width: min(90%, 1100px);
+    padding: 0 16px;
   }
 
   .greeting-text {
@@ -225,11 +222,12 @@
   }
 
   .about-content {
-    gap: 18px;
+    gap: 16px;
   }
 
   .about-paragraph {
     font-size: clamp(14px, 3.3vw, 16px);
+    margin-top: 12px;
     text-align: left;
     text-wrap: pretty;
     hyphens: auto;
@@ -238,7 +236,7 @@
 
   .about-text-left p {
     line-height: 1.9;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
 
   /* Mobile: greeting + tagline, then centered photo, then text, then links */

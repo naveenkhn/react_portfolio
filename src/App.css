@@ -8,6 +8,10 @@
   --primary: #64ffda; /* highlight color */
   --secondary: #8892b0;
   --white: #e6f1ff;
+  --section-pad-mobile: 56px;
+  --section-title-gap-mobile: 24px;
+  --section-title-underline-width-mobile: 120px;
+  --section-title-underline-height-mobile: 2px;
   --font-sans: 'Inter', 'Calibre', 'San Francisco', sans-serif;
   --font-mono: 'Fira Code', 'SF Mono', 'Roboto Mono', monospace;
   --font-weight-regular: 400;
@@ -64,6 +68,31 @@ body, html {
 
 .footer p {
   margin: 4px 0;
+}
+
+@media (max-width: 600px) {
+  .about-section,
+  .experience-section,
+  .skills-section,
+  .work-section,
+  .contact-section {
+    padding: var(--section-pad-mobile) 0;
+  }
+
+  .experience-title,
+  .skills-title,
+  .work-title,
+  .contact-title {
+    margin-bottom: var(--section-title-gap-mobile);
+  }
+
+  .experience-title::after,
+  .skills-title::after,
+  .work-title::after,
+  .contact-title h2::after {
+    width: var(--section-title-underline-width-mobile);
+    height: var(--section-title-underline-height-mobile);
+  }
 }
 
 /* Remove debug outlines */
