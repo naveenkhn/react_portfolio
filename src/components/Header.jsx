@@ -72,26 +72,32 @@ const Header = () => {
 
     // Initialize from hash if present.
     const hashId = window.location.hash?.replace('#', '');
-    if (hashId && ids.includes(hashId)) setActiveSection(hashId);
+    if (hashId && ids.includes(hashId)) {
+      setActiveSection(hashId);
+    }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-        if (visible[0]?.target?.id) setActiveSection(visible[0].target.id);
-      },
-      {
-        root: null,
-        // Bias towards the top portion of the viewport to match "reading position"
-        // and account for the fixed header.
-        rootMargin: '-20% 0px -65% 0px',
-        threshold: [0, 0.1, 0.25, 0.5, 0.75],
-      }
-    );
+    const resolveActiveSection = () => {
+      const readingLine = window.scrollY + 140;
+      let nextActive = ids[0];
 
-    elements.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+      elements.forEach((element) => {
+        if (element.offsetTop <= readingLine) {
+          nextActive = element.id;
+        }
+      });
+
+      setActiveSection(nextActive);
+    };
+
+    const raf = window.requestAnimationFrame(resolveActiveSection);
+    window.addEventListener('scroll', resolveActiveSection, { passive: true });
+    window.addEventListener('resize', resolveActiveSection);
+
+    return () => {
+      window.cancelAnimationFrame(raf);
+      window.removeEventListener('scroll', resolveActiveSection);
+      window.removeEventListener('resize', resolveActiveSection);
+    };
   }, [navItems]);
 
   useEffect(() => {
@@ -214,7 +220,7 @@ const Header = () => {
                 setMenuOpen(false);
               }}
             >
-              {item.label}
+              <span className="mobile-menu-label">{item.label}</span>
             </a>
           ))}
         </nav>

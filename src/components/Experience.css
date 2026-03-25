@@ -46,11 +46,21 @@
 
 .experience-tabs {
   width: 100%;
-  border-bottom: 1px solid var(--secondary);
   display: flex;
   flex-direction: row;
   align-items: center;
   overflow-x: auto;
+  position: relative;
+}
+
+.experience-tabs::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--secondary);
 }
 
 .experience-tab {
@@ -71,6 +81,7 @@
   white-space: nowrap;
   flex: 1;
   position: relative;
+  z-index: 1;
 }
 
 .experience-tab:focus {
@@ -87,15 +98,15 @@
   border-radius: 8px;
 }
 
-.experience-tab.active::before {
+.experience-tab.active::after {
   content: "";
   position: absolute;
-  left: 8px;
-  top: 9px;
-  bottom: 9px;
-  width: 2px;
-  border-radius: 2px;
-  background: rgba(100, 255, 218, 0.9);
+  left: 0;
+  bottom: 0;
+  transform: none;
+  height: 1px;
+  width: 100%;
+  background: var(--primary);
 }
 
 .experience-details {
@@ -281,6 +292,5 @@
   }
   .experience-tabs {
     font-size: 13px;
-    padding: 2px 0;
   }
 }

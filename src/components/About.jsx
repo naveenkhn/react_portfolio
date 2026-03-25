@@ -1,7 +1,6 @@
 // components/About.jsx
 import React from 'react';
 import './About.css';
-import SocialLinks from './SocialLinks';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 
@@ -22,30 +21,28 @@ const About = () => {
       <div className="about-section-content">
         <div className="greeting-container">
           <h1>
-            <span className="greeting-text">Heyy, I'm </span>
+            <span className="greeting-text">Hey, I'm </span>
             <span className="name-text">Naveen.</span>
           </h1>
         </div>
         <div className="tagline-container">
-          <h2>I build scalable systems for complex platforms.</h2>
+          <h2>
+            I’m a Lead Developer at{" "}
+            <a
+              href="https://amadeus.com/en"
+              className="amadeus-link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Amadeus Labs
+            </a>
+            , building large-scale travel applications and the platforms behind them.
+          </h2>
         </div>
         <div className="about-paragraph">
           <div className="about-content">
             {/* Left Column (50%) */}
             <div className="about-text-left">
-              <p>
-                I’m a Lead Engineer at{" "}
-                <a
-                  href="https://amadeus.com/en"
-                  className="amadeus-link"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Amadeus
-                </a>
-                , working on large-scale platforms in the travel domain.
-              </p>
-
               <p>
                 My background spans travel, automotive, and consumer electronics, with experience
                 across embedded systems and cloud-based platforms, covering the full software
@@ -55,19 +52,16 @@ const About = () => {
               <p>
                 I focus on solving complex technical and operational problems, designing systems
                 that scale well, remain stable, and can evolve cleanly as requirements and
-                constraints change.
-              </p>
-              <div className="social-and-resume">
-                <SocialLinks />
+                constraints change. {' '}
                 <a
                   href="/assets/naveenkhn_resume.pdf"
                   className="resume-button"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Resume
+                  View Resume
                 </a>
-              </div>
+              </p>
             </div>
             {/* Right Column (50%) */}
             <div className="about-text-right">

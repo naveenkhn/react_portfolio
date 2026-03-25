@@ -19,7 +19,7 @@
 
 .greeting-text {
   font-size: clamp(18px, 2vw, 28px);
-  color: var(--primary);
+  color: #a8b2d1;
 }
 
 /* Name: Main Heading */
@@ -36,11 +36,15 @@
 }
 
 .tagline-container h2 {
+  display: block;
   font-size: clamp(20px, 3vw, 34px);
   color: var(--secondary);
   margin: 0;
   font-weight: 600;
+  line-height: 1.25;
   white-space: normal;
+  overflow: visible;
+  padding: 2px 0 4px;
 }
 
 /* About Body */
@@ -68,38 +72,16 @@
   align-items: flex-start;
 }
 
-/* Social & Resume */
-.social-and-resume {
-  display: flex;
-  align-items: center;
-  gap: 25px;
-  margin-top: 20px;
-}
-
-.social-links-about {
-  display: flex;
-  gap: 25px;
-}
-
-.social-links-about a {
-  color: #a8b2d1;
-  font-size: 24px;
-  transition: transform 0.3s ease, color 0.3s ease;
-}
-
-.social-links-about a:hover {
-  transform: translateY(-5px);
-  color: var(--primary);
-}
-
 /* Resume Button */
 .resume-button {
+  display: inline-flex;
+  align-items: center;
   text-decoration: none;
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 12px;
   color: var(--primary) !important;
   border: 1px solid var(--primary);
-  padding: 8px 12px;
+  padding: 5px 8px;
   border-radius: 4px;
   transition: box-shadow 0.3s ease;
 }
@@ -133,8 +115,8 @@
 /* Profile Pic Styling */
 .profile-pic-container {
   position: relative;
-  width: 220px;
-  height: 220px;
+  width: 200px;
+  height: 200px;
   cursor: pointer;
   margin-top: 10px;
 }
@@ -147,7 +129,7 @@
   height: 100%;
   border: 2px solid var(--primary);
   border-radius: 6px;
-  transform: translate(10px, 10px);
+  transform: translate(8px, 8px);
   transition: transform 0.3s ease;
   z-index: 1;
 }
@@ -160,17 +142,17 @@
   height: 100%;
   object-fit: cover;
   border-radius: 6px;
-  transform: translate(-5px, -5px);
+  transform: translate(-4px, -4px);
   transition: transform 0.3s ease;
   z-index: 2;
 }
 
 .profile-pic-container:hover .profile-pic-bg {
-  transform: translate(20px, 20px);
+  transform: translate(14px, 14px);
 }
 
 .profile-pic-container:hover .profile-pic {
-  transform: translate(-10px, -10px);
+  transform: translate(-7px, -7px);
 }
 
 /* 🔹 Responsive Fixes */
@@ -215,10 +197,11 @@
   }
 
   .tagline-container h2 {
-    font-size: clamp(14px, 6.2vw, 20px);
-    line-height: 1.2;
-    text-wrap: normal;
+    font-size: clamp(13px, 4.8vw, 17px);
+    line-height: 1.5;
+    text-wrap: pretty;
     max-width: none;
+    padding: 6px 0 6px;
   }
 
   .about-content {
@@ -257,29 +240,9 @@
     margin: 0 auto;
   }
 
-  .social-and-resume {
-    /* Mobile: make icons + resume evenly distributed */
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    align-items: center;
-    gap: 12px;
-  }
-
-  /* Let the icon links participate directly in the 4-col grid */
-  .social-links-about {
-    display: contents;
-  }
-
-  .social-links-about a {
-    justify-self: center;
-    font-size: 28px;
-  }
-
   .resume-button {
-    justify-self: stretch;
-    text-align: center;
-    font-size: 15px;
-    padding: 10px 0;
+    font-size: 12px;
+    padding: 4px 7px;
     border-radius: 6px;
   }
 }

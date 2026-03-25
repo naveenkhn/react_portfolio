@@ -8,8 +8,8 @@
   --primary: #64ffda; /* highlight color */
   --secondary: #8892b0;
   --white: #e6f1ff;
-  --section-pad-mobile: 56px;
-  --section-title-gap-mobile: 24px;
+  --section-pad-mobile: 36px;
+  --section-title-gap-mobile: 22px;
   --section-title-underline-width-mobile: 120px;
   --section-title-underline-height-mobile: 2px;
   --font-sans: 'Inter', 'Calibre', 'San Francisco', sans-serif;
@@ -71,25 +71,25 @@ body, html {
 }
 
 @media (max-width: 600px) {
-  .about-section,
-  .experience-section,
-  .skills-section,
-  .work-section,
-  .contact-section {
+  .main-content .about-section,
+  .main-content .experience-section,
+  .main-content .skills-section,
+  .main-content .work-section,
+  .main-content .contact-section {
     padding: var(--section-pad-mobile) 0;
   }
 
-  .experience-title,
-  .skills-title,
-  .work-title,
-  .contact-title {
+  .main-content .experience-title,
+  .main-content .skills-title,
+  .main-content .work-title,
+  .main-content .contact-title {
     margin-bottom: var(--section-title-gap-mobile);
   }
 
-  .experience-title::after,
-  .skills-title::after,
-  .work-title::after,
-  .contact-title h2::after {
+  .main-content .experience-title::after,
+  .main-content .skills-title::after,
+  .main-content .work-title::after,
+  .main-content .contact-title h2::after {
     width: var(--section-title-underline-width-mobile);
     height: var(--section-title-underline-height-mobile);
   }
