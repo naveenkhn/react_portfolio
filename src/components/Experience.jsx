@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { motion } from 'framer-motion';
 import './Experience.css';
@@ -12,6 +12,7 @@ const companies = [
     tech: 'Azure, Openshift, Kubernetes, GitOps, ArgoCD, Oracle, C++, Java, Splunk, Grafana | Linux Platform',
     image: '/assets/airport.png',
     project: 'Airline Reservation & Inventory Platform',
+    projectUrl: 'https://amadeus.com/en/airlines/products/all',
     client: 'Air France, British Airways, Emirates, Singapore Airlines, Japan Airlines and 400+ airlines',
     summary: 'Seat Management is a core airline system that provides seatmap displays and seat allocation throughout the reservation and operational windows, applying complex business rules.',    
     points: [
@@ -34,6 +35,7 @@ const companies = [
     tech: 'C++, Python, Qt, Google Test | QNX Platform',
     image: '/assets/Goldwing.jpg',
     project: 'Integrated Navigation System',
+    projectUrl: 'https://powersports.honda.com/motorcycle/touring/gold-wing/features#technology',
     client: 'Honda Gold Wing 1833cc Super Bike',
     summary: 'Developed features for an infotainment system offering navigation, phone integration, and multimedia for Honda’s flagship touring motorcycle.',     
     points: [
@@ -70,6 +72,7 @@ const companies = [
     tech: 'C++, Python | Linux Platform',
     image: '/assets/sony_bravia.jpg',
     project: 'BRAVIA SMART TV',
+    projectUrl: 'https://www.sony.co.in/electronics/bravia/extra',
     client: 'SONY',
     summary: 'Worked on Human-Machine Interface (HMI) components for Sony BRAVIA Smart TVs, focusing on setup flows and remote control interactions.',    
     points: [
@@ -81,9 +84,59 @@ const companies = [
   },
 ];
 
+const SWIPE_THRESHOLD = 40;
+
 function Experience() {
   const [activeIndex, setActiveIndex] = useState(0);
   const { ref, inView } = useInView({ triggerOnce: true });
+  const touchStateRef = useRef({ startX: null, handled: false });
+  const activeCompany = companies[activeIndex];
+
+  const metadataRows = [
+    { key: 'role', label: 'Role', value: activeCompany.role, emphasized: true },
+    { key: 'company', label: 'Company', value: activeCompany.name, href: activeCompany.url },
+    { key: 'period', label: 'Tenure', value: activeCompany.period },
+    { key: 'project', label: 'Product', value: activeCompany.project, href: activeCompany.projectUrl },
+    { key: 'client', label: 'Client', value: activeCompany.client },
+    { key: 'tech', label: 'Stack', value: activeCompany.tech, highlighted: true },
+  ];
+
+  const goToPrevious = () => {
+    setActiveIndex((current) => (current - 1 + companies.length) % companies.length);
+  };
+
+  const goToNext = () => {
+    setActiveIndex((current) => (current + 1) % companies.length);
+  };
+
+  const handleTouchStart = (event) => {
+    touchStateRef.current = {
+      startX: event.touches[0]?.clientX ?? null,
+      handled: false,
+    };
+  };
+
+  const handleTouchMove = (event) => {
+    const { startX, handled } = touchStateRef.current;
+    if (startX === null || handled) return;
+
+    const currentX = event.touches[0]?.clientX ?? startX;
+    const deltaX = currentX - startX;
+
+    if (Math.abs(deltaX) < SWIPE_THRESHOLD) return;
+
+    if (deltaX < 0) {
+      goToNext();
+    } else {
+      goToPrevious();
+    }
+
+    touchStateRef.current.handled = true;
+  };
+
+  const handleTouchEnd = () => {
+    touchStateRef.current = { startX: null, handled: false };
+  };
 
   return (
     <motion.section
@@ -95,51 +148,72 @@ function Experience() {
       transition={{ duration: 0.5, delay: 0.9 }}
     >
       <div className="experience-content">
-        <h2 className="experience-title">Experience</h2>
+        <div className="experience-title-row">
+          <h2 className="experience-title">Experience</h2>
+        </div>
         <div className="experience-container">
-          <div className="experience-tabs">
-            {companies.map((company, index) => (
-              <button
-                key={company.name}
-                className={`experience-tab ${index === activeIndex ? 'active' : ''}`}
-                onClick={() => setActiveIndex(index)}
-              >
-                {company.name}
-              </button>
-            ))}
+          <div className="experience-tabs-row">
+            <div className="experience-tabs">
+              {companies.map((company, index) => (
+                <button
+                  key={company.name}
+                  className={`experience-tab ${index === activeIndex ? 'active' : ''}`}
+                  onClick={() => setActiveIndex(index)}
+                >
+                  {company.name}
+                </button>
+              ))}
+            </div>
           </div>
 
-          <div className="experience-details">
+          <div
+            className="experience-details"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            onTouchCancel={handleTouchEnd}
+          >
             <div className="experience-role-block">
               <div className="experience-info">
-                <h3 className="experience-role">
-                  {companies[activeIndex].role} @{' '}
-                  <a
-                    href={companies[activeIndex].url}
-                    className="company-name"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {companies[activeIndex].name}
-                  </a>
-                </h3>
-                <div className="experience-period">{companies[activeIndex].period}</div>
-                <div className="experience-project">{companies[activeIndex].project}</div>
-                <div className="experience-client">{companies[activeIndex].client}</div>
-                <div className="experience-tech">{companies[activeIndex].tech}</div>
+                <div className="experience-meta-list">
+                  {metadataRows.map((row) => {
+                    return (
+                      <div
+                        key={row.key}
+                        className={`experience-meta-row ${row.highlighted ? 'experience-meta-row-highlighted' : ''} ${row.emphasized ? 'experience-meta-row-emphasized' : ''}`}
+                      >
+                        <span className="experience-meta-label">{row.label}</span>
+                        <span className="experience-meta-value">
+                          {row.value}
+                          {row.href ? (
+                            <a
+                              href={row.href}
+                              className="experience-meta-link"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              aria-label={`Open ${row.value}`}
+                            >
+                              ↗
+                            </a>
+                          ) : null}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
 
               <div className="experience-product-image">
                 <img
-                  src={`${companies[activeIndex].image}`}
-                  alt={`${companies[activeIndex].name} product`}
+                  src={`${activeCompany.image}`}
+                  alt={`${activeCompany.name} product`}
                 />
               </div>
             </div>
             <ul className="experience-points">
-              {companies[activeIndex].points.map((point, index) => (
+              {activeCompany.points.map((point, index) => (
                 <li key={index}>
-                  <span className="experience-arrow">▹</span> {point}
+                  <span className="experience-bullet">◇</span> {point}
                 </li>
               ))}
             </ul>

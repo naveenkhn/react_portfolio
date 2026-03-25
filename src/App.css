@@ -90,7 +90,6 @@ body, html {
   .main-content .skills-title::after,
   .main-content .work-title::after,
   .main-content .contact-title h2::after {
-    width: var(--section-title-underline-width-mobile);
     height: var(--section-title-underline-height-mobile);
   }
 }
