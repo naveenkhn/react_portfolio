@@ -4,6 +4,18 @@ const Footer = () => {
   const [views, setViews] = useState(null);
 
   useEffect(() => {
+    const hostname = window.location.hostname;
+    const isLocalHost =
+      hostname === 'localhost' ||
+      hostname === '127.0.0.1' ||
+      hostname === '0.0.0.0' ||
+      hostname === '::1';
+
+    if (isLocalHost) {
+      setViews('--');
+      return;
+    }
+
     const site = 'portfolio';
     const path = window.location.pathname || '/';
     const page = path === '/' || path.endsWith('/') ? path : `${path}/`;

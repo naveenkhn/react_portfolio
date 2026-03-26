@@ -62,6 +62,8 @@
   margin: 0 auto;
   height: 100%;
   will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .skills-carousel.touch-enabled {
@@ -124,6 +126,9 @@
   transition: transform 0.3s ease;
   flex: 0 0 calc(33.33% - 12px);
   max-width: 100px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
 }
 .tile-item:hover .skill-icon {
   transform: scale(1.6);
@@ -152,6 +157,9 @@
   overflow: hidden;
   width: 100%;
   text-align: center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 @media (max-width: 900px) {
@@ -184,7 +192,7 @@
   }
 
   .skills-section {
-    min-height: 74svh;
+    min-height: 58svh;
   }
 
   .skills-title {
@@ -192,19 +200,19 @@
   }
 
   .skills-carousel-wrapper {
-    /* Mobile uses a 2 x 4 tile grid for clearer icons and labels. */
+    /* Mobile uses a compact 3 x 3 tile grid. */
     --tile-width: 224px;
-    --tile-height: 324px;
-    --carousel-radius: 170px;
+    --tile-height: 266px;
+    --carousel-radius: 166px;
     --carousel-width: 382px;
-    --carousel-height: 396px;
+    --carousel-height: 320px;
     perspective: 1500px;
     overflow: visible;
-    transform: translateY(8px);
+    transform: translateY(4px);
     transform-origin: 50% 0%;
     width: 100%;
-    height: calc(var(--carousel-height) + 32px);
-    margin-top: 12px;
+    height: calc(var(--carousel-height) + 10px);
+    margin-top: 10px;
     margin-bottom: 0;
     touch-action: pan-y;
   }
@@ -214,28 +222,40 @@
   }
 
   .tile-title {
-    margin-bottom: 14px;
+    margin-bottom: 18px;
     font-size: 13px;
   }
 
   .tile-icons {
-    gap: 12px 12px;
-    padding: 4px 2px 2px;
+    gap: 8px 8px;
+    padding: 8px 2px 0;
   }
 
   .tile-item {
-    max-width: 82px;
-    flex: 0 0 calc(50% - 12px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    max-width: 60px;
+    flex: 0 0 calc(33.33% - 8px);
+    min-height: 64px;
   }
 
   .skill-icon {
-    font-size: 38px;
-    height: 38px;
+    font-size: 30px;
+    height: 34px;
+    margin-bottom: 4px;
   }
 
   .skill-name {
-    width: 76px;
-    font-size: 10px;
+    width: 58px;
+    font-size: 9px;
+    line-height: 1.15;
+  }
+
+  .skill-icon i {
+    font-size: 34px !important;
+    line-height: 1 !important;
   }
 }
 

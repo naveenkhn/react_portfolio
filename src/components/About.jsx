@@ -59,7 +59,7 @@ const About = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  View Resume
+                  Resume ↓
                 </a>
               </p>
             </div>
