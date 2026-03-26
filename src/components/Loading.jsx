@@ -9,65 +9,78 @@ const Loading = ({ onComplete }) => {
   const textRef = useRef(null);
 
   useEffect(() => {
-    // Set up diamond with only the tip visible
-    gsap.set(outlineGroupRef.current, {
-      scale: 1,
-      transformOrigin: "50% 50%" // use center now, no scaling trick
-    });
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let finished = false;
 
-    gsap.set(outlineRef.current, {
-      strokeDasharray: 300,
-      strokeDashoffset: 299.4, // just the first tip visible
-      opacity: 1
-    });
+    const finish = () => {
+      if (finished) return;
+      finished = true;
+      onComplete();
+    };
 
-    gsap.set(textRef.current, { opacity: 0 });
+    const ctx = gsap.context(() => {
+      gsap.set(outlineGroupRef.current, {
+        scale: 1,
+        rotation: 0,
+        transformOrigin: "50% 50%"
+      });
 
-    const tl = gsap.timeline({ onComplete });
+      gsap.set(outlineRef.current, {
+        strokeDasharray: 300,
+        strokeDashoffset: 299.4,
+        opacity: 1
+      });
 
-    // Stage 0: Hold the visible tip for 0.6s
-    tl.to(outlineRef.current, {
-      strokeDashoffset: "+=0",
-      duration: 0.5
-    });
+      gsap.set(textRef.current, { opacity: 0 });
+      gsap.set(overlayRef.current, { opacity: 1 });
 
-    // Stage 1: Draw the rest of the outline
-    tl.to(outlineRef.current, {
-      strokeDashoffset: 0,
-      duration: 2.0,
-      ease: "power1.inOut"
-    });
+      if (prefersReducedMotion) {
+        gsap.timeline({ onComplete: finish })
+          .set(outlineRef.current, { strokeDashoffset: 0 })
+          .set(textRef.current, { opacity: 1 })
+          .to(overlayRef.current, {
+            opacity: 0,
+            duration: 0.18,
+            ease: "power1.out"
+          });
+        return;
+      }
 
-    // Stage 2: Fade in "N"
-    tl.to(textRef.current, {
-      opacity: 1,
-      duration: 0.8,
-      ease: "power1.inOut"
-    }, "-=0.3");
+      gsap.timeline({ onComplete: finish })
+        .to(outlineRef.current, {
+          strokeDashoffset: "+=0",
+          duration: 0.18
+        })
+        .to(outlineRef.current, {
+          strokeDashoffset: 0,
+          duration: 0.85,
+          ease: "power1.inOut"
+        })
+        .to(textRef.current, {
+          opacity: 1,
+          duration: 0.28,
+          ease: "power1.out"
+        }, "-=0.18")
+        .to(outlineGroupRef.current, {
+          rotation: 45,
+          duration: 0.4,
+          ease: "power1.inOut"
+        })
+        .to(outlineGroupRef.current, {
+          rotation: 0,
+          duration: 0.48,
+          ease: "power1.inOut"
+        })
+        .to(overlayRef.current, {
+          opacity: 0,
+          duration: 0.28,
+          ease: "power1.out"
+        }, "-=0.08");
+    }, overlayRef);
 
-    // Stage 3: Rotate to square
-    tl.to(outlineGroupRef.current, {
-      rotation: 45,
-      duration: 0.8,
-      ease: "power1.inOut"
-    });
-
-    // Stage 4: Pause
-    tl.to({}, { duration: 0.4 });
-
-    // Stage 5: Rotate back to diamond
-    tl.to(outlineGroupRef.current, {
-      rotation: 0,
-      duration: 1.0,
-      ease: "power1.inOut"
-    });
-
-    // Stage 6: Fade out overlay
-    tl.to(overlayRef.current, {
-      opacity: 0,
-      duration: 0.5,
-      ease: "power1.inOut"
-    });
+    return () => {
+      ctx.revert();
+    };
   }, [onComplete]);
 
   return (
