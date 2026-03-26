@@ -9,7 +9,7 @@ const companies = [
     role: 'Lead Developer',
     period: 'Sep 2018 - Present',
     url: 'https://amadeus.com/en',
-    tech: 'Azure, Openshift, Kubernetes, GitOps, ArgoCD, Oracle, C++, Java, Splunk, Grafana | Linux Platform',
+    tech: 'C++, Python, Java, Angular, Azure, OpenShift, Oracle, MongoDB',
     image: '/assets/airport.png',
     project: 'Airline Reservation & Inventory Platform',
     projectUrl: 'https://amadeus.com/en/airlines/products/all',
@@ -28,11 +28,11 @@ const companies = [
     ],
   },
   {
-    name: 'Harman',
+    name: 'HARMAN',
     role: 'Senior Developer',
     period: 'Dec 2015 - Aug 2018',
     url: 'https://www.harman.com/',
-    tech: 'C++, Python, Qt, Google Test | QNX Platform',
+    tech: 'C++, Python, Qt, Google Test',
     image: '/assets/Goldwing.jpg',
     project: 'Navigation system for Gold Wing superbike',
     projectUrl: 'https://powersports.honda.com/motorcycle/touring/gold-wing/features#technology',
@@ -46,11 +46,11 @@ const companies = [
       ],
   },
   {
-    name: 'Bosch',
+    name: 'BOSCH',
     role: 'Senior Developer',
     period: 'Oct 2013 - Nov 2015',
     url: 'https://www.bosch-softwaretechnologies.com/en/',
-    tech: 'C++, Python, Perl | Linux Platform',
+    tech: 'C++, Python, Perl',
     image: '/assets/car_infotainment.jpeg',
     project: 'Car Infotainment System',
     client: 'PEUGEOT',
@@ -65,11 +65,11 @@ const companies = [
     ],
   },  
   {
-    name: 'HCL',
+    name: 'HCLTech',
     role: 'Developer',
     period: 'July 2011 - Sep 2013',
     url: 'https://www.hcltech.com/',
-    tech: 'C++, Python | Linux Platform',
+    tech: 'C++, Python',
     image: '/assets/sony_bravia.jpg',
     project: 'BRAVIA SMART TV',
     projectUrl: 'https://www.sony.co.in/electronics/bravia/extra',
@@ -94,11 +94,11 @@ function Experience() {
 
   const metadataRows = [
     { key: 'role', label: 'Role', value: activeCompany.role, emphasized: true },
-    { key: 'company', label: 'Company', value: activeCompany.name, href: activeCompany.url },
+    { key: 'company', label: 'Company', value: activeCompany.name, href: activeCompany.url, ariaLabel: activeCompany.name },
     { key: 'period', label: 'Tenure', value: activeCompany.period },
     { key: 'project', label: 'Product', value: activeCompany.project, href: activeCompany.projectUrl },
     { key: 'client', label: 'Client', value: activeCompany.client },
-    { key: 'tech', label: 'Stack', value: activeCompany.tech, highlighted: true },
+    { key: 'tech', label: 'Stack', value: activeCompany.tech, highlighted: true, items: activeCompany.tech.split(',').map((item) => item.trim()) },
   ];
 
   const goToPrevious = () => {
@@ -159,6 +159,7 @@ function Experience() {
                   key={company.name}
                   className={`experience-tab ${index === activeIndex ? 'active' : ''}`}
                   onClick={() => setActiveIndex(index)}
+                  aria-label={company.name}
                 >
                   {company.name}
                 </button>
@@ -184,14 +185,22 @@ function Experience() {
                       >
                         <span className="experience-meta-label">{row.label}</span>
                         <span className="experience-meta-value">
-                          {row.value}
+                          {row.key === 'tech' ? (
+                            <span className="experience-stack-chips">
+                              {row.items.map((item) => (
+                                <span key={item} className="experience-stack-chip">{item}</span>
+                              ))}
+                            </span>
+                          ) : (
+                            row.value
+                          )}
                           {row.href ? (
                             <a
                               href={row.href}
                               className="experience-meta-link"
                               target="_blank"
                               rel="noopener noreferrer"
-                              aria-label={`Open ${row.value}`}
+                              aria-label={`Open ${row.ariaLabel ?? row.value}`}
                             >
                               ↗
                             </a>

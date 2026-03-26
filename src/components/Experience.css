@@ -155,7 +155,7 @@
 }
 
 .experience-meta-row-highlighted {
-  color: var(--primary);
+  color: var(--secondary);
 }
 
 .experience-meta-row-emphasized .experience-meta-value {
@@ -164,7 +164,7 @@
 
 .experience-meta-label {
   display: inline-flex;
-  min-width: 58px;
+  min-width: 92px;
   color: var(--primary);
   font-family: var(--font-mono);
   font-size: 11px;
@@ -176,6 +176,26 @@
 
 .experience-meta-value {
   min-width: 0;
+}
+
+.experience-stack-chips {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.experience-stack-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(136, 146, 176, 0.22);
+  background: rgba(136, 146, 176, 0.04);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  line-height: 1.4;
+  color: rgba(100, 255, 218, 0.8);
+  white-space: nowrap;
 }
 
 .experience-meta-link {
@@ -324,13 +344,16 @@
     line-height: 1.5;
   }
   .experience-meta-label {
-    min-width: 50px;
+    min-width: 84px;
     font-size: 10px;
   }
   .experience-points li {
     font-size: clamp(13px, 3.4vw, 15px);
     margin-bottom: 10px;
     line-height: 1.8;
+  }
+  .experience-stack-chip {
+    padding: 2px 7px;
   }
   .experience-tabs {
     font-size: 13px;

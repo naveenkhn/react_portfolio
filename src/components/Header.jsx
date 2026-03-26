@@ -8,6 +8,7 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [indicator, setIndicator] = useState({ left: 0, width: 0, opacity: 0 });
+  const headerRef = useRef(null);
   const navRef = useRef(null);
   const navItemRefs = useRef({});
 
@@ -77,12 +78,33 @@ const Header = () => {
     }
 
     const resolveActiveSection = () => {
-      const readingLine = window.scrollY + 140;
+      const headerHeight = headerRef.current?.getBoundingClientRect().height ?? 0;
+      const viewportTop = headerHeight;
+      const viewportBottom = window.innerHeight;
       let nextActive = ids[0];
+      let maxVisibleHeight = -1;
+      let fallbackDistance = Number.POSITIVE_INFINITY;
 
       elements.forEach((element) => {
-        if (element.offsetTop <= readingLine) {
+        const rect = element.getBoundingClientRect();
+        const visibleTop = Math.max(rect.top, viewportTop);
+        const visibleBottom = Math.min(rect.bottom, viewportBottom);
+        const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+
+        if (visibleHeight > maxVisibleHeight) {
+          maxVisibleHeight = visibleHeight;
           nextActive = element.id;
+        }
+
+        if (visibleHeight === maxVisibleHeight && visibleHeight > 0) {
+          const sectionCenter = rect.top + rect.height / 2;
+          const viewportCenter = viewportTop + (viewportBottom - viewportTop) / 2;
+          const distance = Math.abs(sectionCenter - viewportCenter);
+
+          if (distance < fallbackDistance) {
+            fallbackDistance = distance;
+            nextActive = element.id;
+          }
         }
       });
 
@@ -145,6 +167,7 @@ const Header = () => {
         // motion.header enables entrance animation and toggles class based on scroll visibility
         className="header"
         style={{ display: showHeader ? 'flex' : 'none' }}
+        ref={headerRef}
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.0, ease: 'easeOut' }}
