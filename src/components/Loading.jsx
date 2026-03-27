@@ -7,6 +7,8 @@ const Loading = ({ onComplete }) => {
   const outlineGroupRef = useRef(null);
   const outlineRef = useRef(null);
   const textRef = useRef(null);
+  const progressTextRef = useRef(null);
+  const progressFillRef = useRef(null);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -19,6 +21,8 @@ const Loading = ({ onComplete }) => {
     };
 
     const ctx = gsap.context(() => {
+      const outlineLength = outlineRef.current?.getTotalLength?.() ?? 300;
+
       gsap.set(outlineGroupRef.current, {
         scale: 1,
         rotation: 0,
@@ -26,18 +30,25 @@ const Loading = ({ onComplete }) => {
       });
 
       gsap.set(outlineRef.current, {
-        strokeDasharray: 300,
-        strokeDashoffset: 299.4,
+        strokeDasharray: outlineLength,
+        strokeDashoffset: outlineLength - 0.6,
         opacity: 1
       });
 
       gsap.set(textRef.current, { opacity: 0 });
+      gsap.set(progressTextRef.current, { textContent: '0%' });
+      gsap.set(progressFillRef.current, {
+        scaleX: 0,
+        transformOrigin: '50% 50%'
+      });
       gsap.set(overlayRef.current, { opacity: 1 });
 
       if (prefersReducedMotion) {
         gsap.timeline({ onComplete: finish })
           .set(outlineRef.current, { strokeDashoffset: 0 })
           .set(textRef.current, { opacity: 1 })
+          .set(progressTextRef.current, { textContent: '100%' })
+          .set(progressFillRef.current, { scaleX: 1 })
           .to(overlayRef.current, {
             opacity: 0,
             duration: 0.18,
@@ -46,36 +57,43 @@ const Loading = ({ onComplete }) => {
         return;
       }
 
+      const progressState = { value: 0 };
+
       gsap.timeline({ onComplete: finish })
+        .to(progressState, {
+          value: 100,
+          duration: 2.75,
+          ease: "none",
+          onUpdate: () => {
+            if (progressTextRef.current) {
+              progressTextRef.current.textContent = `${Math.round(progressState.value)}%`;
+            }
+          }
+        }, 0)
+        .to(progressFillRef.current, {
+          scaleX: 1,
+          duration: 2.75,
+          ease: "none"
+        }, 0)
         .to(outlineRef.current, {
           strokeDashoffset: "+=0",
-          duration: 0.18
-        })
+          duration: 0.12
+        }, 0)
         .to(outlineRef.current, {
           strokeDashoffset: 0,
-          duration: 0.85,
+          duration: 2.1,
           ease: "power1.inOut"
-        })
+        }, 0.12)
         .to(textRef.current, {
           opacity: 1,
-          duration: 0.28,
+          duration: 0.42,
           ease: "power1.out"
-        }, "-=0.18")
-        .to(outlineGroupRef.current, {
-          rotation: 45,
-          duration: 0.4,
-          ease: "power1.inOut"
-        })
-        .to(outlineGroupRef.current, {
-          rotation: 0,
-          duration: 0.48,
-          ease: "power1.inOut"
-        })
+        }, 1.95)
         .to(overlayRef.current, {
           opacity: 0,
-          duration: 0.28,
+          duration: 0.25,
           ease: "power1.out"
-        }, "-=0.08");
+        }, 2.85);
     }, overlayRef);
 
     return () => {
@@ -103,6 +121,12 @@ const Loading = ({ onComplete }) => {
           N
         </text>
       </svg>
+      <div className="loading-progress" aria-hidden="true">
+        <div ref={progressTextRef} className="loading-progress-text">0%</div>
+        <div className="loading-progress-track">
+          <div ref={progressFillRef} className="loading-progress-fill" />
+        </div>
+      </div>
     </div>
   );
 };

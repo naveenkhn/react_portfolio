@@ -6,9 +6,11 @@
     height: 100dvh;
     background-color: var(--background);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     z-index: 9999;
+    gap: 34px;
   }
   
   .loading-logo {
@@ -19,7 +21,7 @@
   .logo-outline {
     fill: none;
     stroke: var(--primary);
-    stroke-width: 5;
+    stroke-width: 3.5;
     stroke-linecap: round;
     opacity: 1;
   }
@@ -27,7 +29,39 @@
   .logo-text {
     fill: var(--primary);
     font-size: clamp(20px, 6vw, 32px);
-    font-weight: 600;
+    font-weight: 500;
     opacity: 0;
     pointer-events: none;
+  }
+
+  .loading-progress {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .loading-progress-text {
+    color: var(--primary);
+    font-family: var(--font-mono);
+    font-size: clamp(13px, 3.4vw, 20px);
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .loading-progress-track {
+    width: clamp(132px, 28vw, 196px);
+    height: 2px;
+    border-radius: 999px;
+    background: rgba(136, 146, 176, 0.35);
+    overflow: hidden;
+  }
+
+  .loading-progress-fill {
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--primary);
+    transform: scaleX(0);
+    transform-origin: 50% 50%;
   }
