@@ -7,6 +7,7 @@ const Loading = ({ onComplete }) => {
   const outlineGroupRef = useRef(null);
   const outlineRef = useRef(null);
   const textRef = useRef(null);
+  const cursorRef = useRef(null);
   const progressTextRef = useRef(null);
   const progressFillRef = useRef(null);
 
@@ -36,6 +37,7 @@ const Loading = ({ onComplete }) => {
       });
 
       gsap.set(textRef.current, { opacity: 0 });
+      gsap.set(cursorRef.current, { opacity: 0 });
       gsap.set(progressTextRef.current, { textContent: '0%' });
       gsap.set(progressFillRef.current, {
         scaleX: 0,
@@ -47,6 +49,8 @@ const Loading = ({ onComplete }) => {
         gsap.timeline({ onComplete: finish })
           .set(outlineRef.current, { strokeDashoffset: 0 })
           .set(textRef.current, { opacity: 1 })
+          .set(cursorRef.current, { opacity: 1 })
+          .set(outlineGroupRef.current, { rotation: 45 })
           .set(progressTextRef.current, { textContent: '100%' })
           .set(progressFillRef.current, { scaleX: 1 })
           .to(overlayRef.current, {
@@ -62,7 +66,7 @@ const Loading = ({ onComplete }) => {
       gsap.timeline({ onComplete: finish })
         .to(progressState, {
           value: 100,
-          duration: 2.75,
+          duration: 3.8,
           ease: "none",
           onUpdate: () => {
             if (progressTextRef.current) {
@@ -72,28 +76,45 @@ const Loading = ({ onComplete }) => {
         }, 0)
         .to(progressFillRef.current, {
           scaleX: 1,
-          duration: 2.75,
+          duration: 3.8,
           ease: "none"
         }, 0)
         .to(outlineRef.current, {
           strokeDashoffset: "+=0",
-          duration: 0.12
+          duration: 0.08
         }, 0)
         .to(outlineRef.current, {
           strokeDashoffset: 0,
-          duration: 2.1,
-          ease: "power1.inOut"
-        }, 0.12)
+          duration: 1.05,
+          ease: "power2.inOut"
+        }, 0.08)
         .to(textRef.current, {
           opacity: 1,
-          duration: 0.42,
-          ease: "power1.out"
-        }, 1.95)
+          duration: 0.34,
+          ease: "power2.out"
+        }, 1.08)
+        .to(outlineGroupRef.current, {
+          rotation: 45,
+          duration: 1.1,
+          ease: "power3.inOut"
+        }, 1.42)
+        .to(cursorRef.current, {
+          opacity: 1,
+          duration: 0.22,
+          ease: "power2.out"
+        }, 2.62)
+        .to(cursorRef.current, {
+          opacity: 0.24,
+          duration: 0.44,
+          ease: "power1.inOut",
+          repeat: 2,
+          yoyo: true
+        }, 2.9)
         .to(overlayRef.current, {
           opacity: 0,
-          duration: 0.25,
-          ease: "power1.out"
-        }, 2.85);
+          duration: 0.32,
+          ease: "power2.out"
+        }, 3.75);
     }, overlayRef);
 
     return () => {
@@ -113,13 +134,22 @@ const Loading = ({ onComplete }) => {
         </g>
         <text
           ref={textRef}
-          x="50"
-          y="60"
+          x="46"
+          y="59"
           textAnchor="middle"
           className="logo-text"
         >
           N
         </text>
+        <rect
+          ref={cursorRef}
+          x="54.5"
+          y="63.5"
+          width="13"
+          height="2.8"
+          rx="1.4"
+          className="logo-cursor"
+        />
       </svg>
       <div className="loading-progress" aria-hidden="true">
         <div ref={progressTextRef} className="loading-progress-text">0%</div>
