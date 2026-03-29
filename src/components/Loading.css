@@ -14,8 +14,8 @@
   }
   
   .loading-logo {
-    width: clamp(60px, 20vw, 120px);
-    height: clamp(60px, 20vw, 120px);
+    width: clamp(68px, 22vw, 128px);
+    height: clamp(68px, 22vw, 128px);
   }
   
   .logo-outline {
@@ -28,15 +28,9 @@
   
   .logo-text {
     fill: var(--primary);
-    font-size: clamp(18px, 5.3vw, 29px);
+    font-size: clamp(20px, 6vw, 31px);
     font-weight: 500;
-    letter-spacing: -0.05em;
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  .logo-cursor {
-    fill: var(--primary);
+    letter-spacing: -0.04em;
     opacity: 0;
     pointer-events: none;
   }

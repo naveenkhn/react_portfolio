@@ -1,14 +1,52 @@
 // components/About.jsx
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import './About.css';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 
 const About = () => {
+  const fullGreeting = "Hey, I'm NAVEEN.";
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
+  const [typedLength, setTypedLength] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    if (!inView) return undefined;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      setTypedLength(fullGreeting.length);
+      return undefined;
+    }
+
+    let timeoutId;
+
+    if (!isDeleting && typedLength < fullGreeting.length) {
+      timeoutId = window.setTimeout(() => {
+        setTypedLength((prev) => prev + 1);
+      }, 120);
+    } else if (!isDeleting && typedLength === fullGreeting.length) {
+      timeoutId = window.setTimeout(() => {
+        setIsDeleting(true);
+      }, 1200);
+    } else if (isDeleting && typedLength > 0) {
+      timeoutId = window.setTimeout(() => {
+        setTypedLength((prev) => prev - 1);
+      }, 65);
+    } else if (isDeleting && typedLength === 0) {
+      timeoutId = window.setTimeout(() => {
+        setIsDeleting(false);
+      }, 260);
+    }
+
+    return () => window.clearTimeout(timeoutId);
+  }, [fullGreeting.length, inView, isDeleting, typedLength]);
+
+  const typedGreeting = useMemo(() => fullGreeting.slice(0, typedLength), [fullGreeting, typedLength]);
+
   return (
     <motion.section
       ref={ref}
@@ -20,9 +58,12 @@ const About = () => {
     >
       <div className="about-section-content">
         <div className="greeting-container">
-          <h1>
-            <span className="greeting-text">Hey, I'm </span>
-            <span className="name-text">Naveen.</span>
+          <h1 className="typed-greeting-heading" aria-label={fullGreeting}>
+            <span className="typed-greeting-ghost" aria-hidden="true">{fullGreeting}</span>
+            <span className="typed-greeting-live" aria-hidden="true">
+              <span className="typed-greeting-text">{typedGreeting}</span>
+              <span className="typing-cursor">_</span>
+            </span>
           </h1>
         </div>
         <div className="tagline-container">

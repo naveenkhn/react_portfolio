@@ -21,16 +21,16 @@
 /* Home Button: square mark with subtle hover */
 .home-button.diamond {
   display: inline-block;
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   border: 3px solid var(--primary);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.34s ease, box-shadow 0.34s ease;
   position: relative;
 }
 
 .home-button.diamond:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 8px rgba(100, 255, 218, 0.6);
+  transform: scale(1.07);
+  box-shadow: 0 0 8px rgba(100, 255, 218, 0.5);
 }
 
 .home-button.diamond .diamond-text {
@@ -39,27 +39,10 @@
   left: 50%;
   font-size: 18px;
   font-weight: 500;
-  letter-spacing: -0.05em;
-  transform: translate(-50%, -50%);
+  letter-spacing: -0.04em;
+  transform: translate(-50%, -50.9%);
   color: var(--primary);
   white-space: nowrap;
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.02em;
-}
-
-.home-button.diamond .diamond-cursor {
-  animation: header-cursor-blink 1.45s steps(1, end) infinite;
-}
-
-@keyframes header-cursor-blink {
-  0%, 58% {
-    opacity: 1;
-  }
-
-  59%, 100% {
-    opacity: 0.24;
-  }
 }
 
 /* Navigation */
@@ -277,14 +260,15 @@
   }
 
   .home-button.diamond {
-    width: 30px;
-    height: 30px;
+    width: 33px;
+    height: 33px;
     border-width: 2px;
     margin-left: 8px;
   }
 
   .home-button.diamond .diamond-text {
-    font-size: 11px;
+    font-size: 13px;
+    transform: translate(-50%, -50.9%);
   }
 
   .nav-links {
@@ -295,8 +279,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 38px;
-    height: 38px;
+    width: 40px;
+    height: 40px;
     border-radius: 10px;
     border-width: 2px;
   }
@@ -311,7 +295,7 @@
   .menu-icon,
   .menu-icon::before,
   .menu-icon::after {
-    width: 16px;
+    width: 17px;
   }
 
   .menu-icon::before {

@@ -173,10 +173,7 @@ const Header = () => {
         transition={{ duration: 1.0, ease: 'easeOut' }}
       >
         <a href="#home" className="home-button diamond" onClick={() => setMenuOpen(false)}>
-          <span className="diamond-text">
-            <span className="diamond-letter">N</span>
-            <span className="diamond-cursor">_</span>
-          </span>
+          <span className="diamond-text">N.</span>
         </a>
 
         <button

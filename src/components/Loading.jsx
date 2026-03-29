@@ -7,7 +7,7 @@ const Loading = ({ onComplete }) => {
   const outlineGroupRef = useRef(null);
   const outlineRef = useRef(null);
   const textRef = useRef(null);
-  const cursorRef = useRef(null);
+  const finalMarkRef = useRef(null);
   const progressTextRef = useRef(null);
   const progressFillRef = useRef(null);
 
@@ -37,7 +37,7 @@ const Loading = ({ onComplete }) => {
       });
 
       gsap.set(textRef.current, { opacity: 0 });
-      gsap.set(cursorRef.current, { opacity: 0 });
+      gsap.set(finalMarkRef.current, { opacity: 0 });
       gsap.set(progressTextRef.current, { textContent: '0%' });
       gsap.set(progressFillRef.current, {
         scaleX: 0,
@@ -49,8 +49,9 @@ const Loading = ({ onComplete }) => {
         gsap.timeline({ onComplete: finish })
           .set(outlineRef.current, { strokeDashoffset: 0 })
           .set(textRef.current, { opacity: 1 })
-          .set(cursorRef.current, { opacity: 1 })
           .set(outlineGroupRef.current, { rotation: 45 })
+          .set(textRef.current, { opacity: 0 })
+          .set(finalMarkRef.current, { opacity: 1 })
           .set(progressTextRef.current, { textContent: '100%' })
           .set(progressFillRef.current, { scaleX: 1 })
           .to(overlayRef.current, {
@@ -98,18 +99,16 @@ const Loading = ({ onComplete }) => {
           duration: 1.1,
           ease: "power3.inOut"
         }, 1.42)
-        .to(cursorRef.current, {
+        .to(textRef.current, {
+          opacity: 0,
+          duration: 0.12,
+          ease: "power1.out"
+        }, 2.58)
+        .to(finalMarkRef.current, {
           opacity: 1,
-          duration: 0.22,
+          duration: 0.28,
           ease: "power2.out"
-        }, 2.62)
-        .to(cursorRef.current, {
-          opacity: 0.24,
-          duration: 0.44,
-          ease: "power1.inOut",
-          repeat: 2,
-          yoyo: true
-        }, 2.9)
+        }, 2.6)
         .to(overlayRef.current, {
           opacity: 0,
           duration: 0.32,
@@ -134,22 +133,22 @@ const Loading = ({ onComplete }) => {
         </g>
         <text
           ref={textRef}
-          x="46"
-          y="59"
+          x="50"
+          y="58.5"
           textAnchor="middle"
           className="logo-text"
         >
           N
         </text>
-        <rect
-          ref={cursorRef}
-          x="54.5"
-          y="63.5"
-          width="13"
-          height="2.8"
-          rx="1.4"
-          className="logo-cursor"
-        />
+        <text
+          ref={finalMarkRef}
+          x="50"
+          y="58.5"
+          textAnchor="middle"
+          className="logo-text"
+        >
+          N.
+        </text>
       </svg>
       <div className="loading-progress" aria-hidden="true">
         <div ref={progressTextRef} className="loading-progress-text">0%</div>

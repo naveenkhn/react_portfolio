@@ -5,34 +5,77 @@
 
 /* Main content: fixed max width for better control */
 .about-section-content {
+  --about-flow-gap: 14px;
   width: min(80%, 1100px);
   margin: 0 auto;
   padding: 0 16px;
   display: flex;
   flex-direction: column;
+  gap: var(--about-flow-gap);
 }
 
 /* Greeting */
 .greeting-container {
   text-align: left;
+  margin-bottom: 0;
 }
 
-.greeting-text {
-  font-size: clamp(18px, 2vw, 28px);
-  color: #a8b2d1;
+.typed-greeting-heading {
+  --greeting-size: clamp(20px, 3vw, 34px);
+  display: inline-grid;
+  align-items: center;
+  margin: 0;
+  line-height: 1;
+  white-space: nowrap;
 }
 
-/* Name: Main Heading */
-.name-text {
-  font-size: clamp(38px, 6vw, 70px);
+.typed-greeting-ghost,
+.typed-greeting-text {
+  font-size: var(--greeting-size);
   color: #a8b2d1;
   margin: 0;
-  line-height: 1.1;
+  white-space: pre;
+}
+
+.typed-greeting-ghost {
+  grid-area: 1 / 1;
+  visibility: hidden;
+  line-height: 1;
+}
+
+.typed-greeting-live {
+  grid-area: 1 / 1;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.08em;
+  white-space: nowrap;
+}
+
+.typing-cursor {
+  display: inline-block;
+  color: var(--primary);
+  font-family: inherit;
+  font-size: var(--greeting-size);
+  font-weight: 500;
+  line-height: 1;
+  transform: translateY(0.02em);
+  animation: about-typing-cursor 0.85s steps(1, end) infinite;
+}
+
+@keyframes about-typing-cursor {
+  0%, 55% {
+    opacity: 1;
+  }
+
+  56%, 100% {
+    opacity: 0.18;
+  }
 }
 
 /* Tagline */
 .tagline-container {
   text-align: left;
+  margin-bottom: 0;
 }
 
 .tagline-container h2 {
@@ -49,7 +92,7 @@
 
 /* About Body */
 .about-paragraph {
-  margin-top: 15px;
+  margin-top: 0;
   text-align: justify;
   font-size: clamp(14px, 1.2vw, 18px);
   line-height: 1.7;
@@ -58,18 +101,22 @@
 
 .about-content {
   display: flex;
-  gap: 10px;
+  gap: 14px;
+  align-items: stretch;
+  min-height: 232px;
 }
 
 .about-text-left {
   width: 65%;
+  min-height: 232px;
 }
 
 .about-text-right {
   width: 35%;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
+  min-height: 232px;
 }
 
 /* Resume Button */
@@ -118,7 +165,7 @@
   width: 200px;
   height: 200px;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 0;
 }
 
 .profile-pic-bg {
@@ -159,8 +206,8 @@
 @media (max-width: 900px) {
   .about-content {
     flex-direction: column;
-    gap: 30px;
-    margin-top: 18px;
+    gap: 12px;
+    margin-top: 0;
   }
 
   .about-text-left,
@@ -170,9 +217,10 @@
   }
 
   .about-text-right {
-    margin-top: 20px;
+    margin-top: 0;
     justify-content: flex-start;
     align-items: flex-start;
+    transform: none;
   }
 
   .profile-pic-container {
@@ -182,7 +230,34 @@
   }
 }
 
+@media (min-width: 901px) {
+  .about-text-right {
+    transform: translateY(-8px);
+  }
+}
+
 @media (max-width: 600px) {
+  .about-section-content {
+    --about-mobile-gap: 14px;
+    --about-flow-gap: var(--about-mobile-gap);
+    gap: var(--about-mobile-gap);
+  }
+
+  .typed-greeting-heading {
+    --greeting-size: clamp(13px, 4.8vw, 17px);
+    line-height: 1;
+  }
+
+  .typed-greeting-live {
+    gap: 0.06em;
+  }
+
+  .typed-greeting-ghost,
+  .typed-greeting-text,
+  .typing-cursor {
+    line-height: 1;
+  }
+
   .amadeus-link::after {
     width: 100%;
   }
@@ -192,38 +267,39 @@
     padding: 0 16px;
   }
 
-  .greeting-text {
-    font-size: clamp(16px, 4vw, 22px);
+  .greeting-container {
+    margin-bottom: 0;
   }
 
-  .name-text {
-    font-size: clamp(26px, 11vw, 36px);
+  .typing-cursor {
+    transform: translateY(0.02em);
   }
 
   .tagline-container h2 {
     font-size: clamp(13px, 4.8vw, 17px);
-    line-height: 1.5;
-    text-wrap: pretty;
+    line-height: 1.4;
     max-width: none;
-    padding: 6px 0 6px;
+    padding: 2px 0 2px;
+  }
+
+  .tagline-container {
+    margin-bottom: 0;
   }
 
   .about-content {
-    gap: 16px;
+    gap: var(--about-mobile-gap);
   }
 
   .about-paragraph {
-    font-size: clamp(14px, 3.3vw, 16px);
-    margin-top: 12px;
-    text-align: left;
-    text-wrap: pretty;
-    hyphens: auto;
-    overflow-wrap: break-word;
+    font-size: clamp(12.5px, 2.9vw, 14px);
+    margin-top: 0;
+    text-align: justify;
+    text-align-last: left;
   }
 
   .about-text-left p {
-    line-height: 1.9;
-    margin-bottom: 10px;
+    line-height: 1.72;
+    margin-bottom: 12px;
   }
 
   /* Mobile: greeting + tagline, then centered photo, then text, then links */
@@ -232,6 +308,7 @@
     margin-top: 0;
     justify-content: center;
     align-items: center;
+    min-height: calc(clamp(120px, 42vw, 160px) + 18px);
   }
 
   .about-text-left {
