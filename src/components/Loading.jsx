@@ -7,7 +7,7 @@ const Loading = ({ onComplete }) => {
   const outlineGroupRef = useRef(null);
   const outlineRef = useRef(null);
   const textRef = useRef(null);
-  const finalMarkRef = useRef(null);
+  const dotRef = useRef(null);
   const progressTextRef = useRef(null);
   const progressFillRef = useRef(null);
 
@@ -37,7 +37,10 @@ const Loading = ({ onComplete }) => {
       });
 
       gsap.set(textRef.current, { opacity: 0 });
-      gsap.set(finalMarkRef.current, { opacity: 0 });
+      gsap.set(dotRef.current, {
+        opacity: 0,
+        x: -2
+      });
       gsap.set(progressTextRef.current, { textContent: '0%' });
       gsap.set(progressFillRef.current, {
         scaleX: 0,
@@ -50,8 +53,7 @@ const Loading = ({ onComplete }) => {
           .set(outlineRef.current, { strokeDashoffset: 0 })
           .set(textRef.current, { opacity: 1 })
           .set(outlineGroupRef.current, { rotation: 45 })
-          .set(textRef.current, { opacity: 0 })
-          .set(finalMarkRef.current, { opacity: 1 })
+          .set(dotRef.current, { opacity: 1, x: 0 })
           .set(progressTextRef.current, { textContent: '100%' })
           .set(progressFillRef.current, { scaleX: 1 })
           .to(overlayRef.current, {
@@ -99,14 +101,10 @@ const Loading = ({ onComplete }) => {
           duration: 1.1,
           ease: "power3.inOut"
         }, 1.42)
-        .to(textRef.current, {
-          opacity: 0,
-          duration: 0.12,
-          ease: "power1.out"
-        }, 2.58)
-        .to(finalMarkRef.current, {
+        .to(dotRef.current, {
           opacity: 1,
-          duration: 0.28,
+          x: 0,
+          duration: 0.32,
           ease: "power2.out"
         }, 2.6)
         .to(overlayRef.current, {
@@ -134,20 +132,22 @@ const Loading = ({ onComplete }) => {
         <text
           ref={textRef}
           x="50"
-          y="58.5"
+          y="52"
           textAnchor="middle"
+          dominantBaseline="middle"
           className="logo-text"
         >
           N
         </text>
         <text
-          ref={finalMarkRef}
-          x="50"
-          y="58.5"
-          textAnchor="middle"
-          className="logo-text"
+          ref={dotRef}
+          x="58"
+          y="52"
+          textAnchor="start"
+          dominantBaseline="middle"
+          className="logo-dot"
         >
-          N.
+          .
         </text>
       </svg>
       <div className="loading-progress" aria-hidden="true">
