@@ -20,12 +20,13 @@
 
 /* Home Button: square mark with subtle hover */
 .home-button.diamond {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 42px;
   height: 42px;
   border: 3px solid var(--primary);
   transition: transform 0.34s ease, box-shadow 0.34s ease;
-  position: relative;
 }
 
 .home-button.diamond:hover {
@@ -34,13 +35,10 @@
 }
 
 .home-button.diamond .diamond-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
   font-size: 18px;
   font-weight: 500;
   letter-spacing: -0.04em;
-  transform: translate(-50%, -50.9%);
+  line-height: 1;
   color: var(--primary);
   white-space: nowrap;
 }
@@ -268,7 +266,6 @@
 
   .home-button.diamond .diamond-text {
     font-size: 13px;
-    transform: translate(-50%, -50.9%);
   }
 
   .nav-links {
