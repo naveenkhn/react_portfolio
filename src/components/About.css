@@ -202,6 +202,24 @@
   transform: translate(-7px, -7px);
 }
 
+.profile-pic-container.touch-active .profile-pic-bg {
+  transform: translate(14px, 14px);
+}
+
+.profile-pic-container.touch-active .profile-pic {
+  transform: translate(-7px, -7px);
+}
+
+@media (hover: none), (pointer: coarse) {
+  .profile-pic-container:hover .profile-pic-bg {
+    transform: translate(8px, 8px);
+  }
+
+  .profile-pic-container:hover .profile-pic {
+    transform: translate(-4px, -4px);
+  }
+}
+
 /* 🔹 Responsive Fixes */
 @media (max-width: 900px) {
   .about-content {

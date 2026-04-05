@@ -12,6 +12,8 @@ const About = () => {
   });
   const [typedLength, setTypedLength] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [photoTouchActive, setPhotoTouchActive] = useState(false);
+  const photoRef = React.useRef(null);
 
   useEffect(() => {
     if (!inView) return undefined;
@@ -46,6 +48,37 @@ const About = () => {
   }, [fullGreeting.length, inView, isDeleting, typedLength]);
 
   const typedGreeting = useMemo(() => fullGreeting.slice(0, typedLength), [fullGreeting, typedLength]);
+
+  const isTouchLikeDevice = () =>
+    window.matchMedia('(hover: none), (pointer: coarse)').matches ||
+    navigator.maxTouchPoints > 0 ||
+    'ontouchstart' in window;
+
+  useEffect(() => {
+    if (!photoTouchActive) return undefined;
+
+    const isTouchLike = isTouchLikeDevice();
+    if (!isTouchLike) return undefined;
+
+    const handleDocumentClick = (event) => {
+      if (!photoRef.current?.contains(event.target)) {
+        setPhotoTouchActive(false);
+      }
+    };
+
+    document.addEventListener('click', handleDocumentClick, true);
+    return () => document.removeEventListener('click', handleDocumentClick, true);
+  }, [photoTouchActive]);
+
+  const togglePhotoTouchActive = (event) => {
+    const isTouchLike = isTouchLikeDevice();
+    if (!isTouchLike) return;
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    setPhotoTouchActive((prev) => !prev);
+  };
 
   return (
     <motion.section
@@ -106,7 +139,12 @@ const About = () => {
             </div>
             {/* Right Column (50%) */}
             <div className="about-text-right">
-              <div className="profile-pic-container">
+              <div
+                ref={photoRef}
+                className={`profile-pic-container ${photoTouchActive ? 'touch-active' : ''}`}
+                onClick={togglePhotoTouchActive}
+                onTouchEnd={togglePhotoTouchActive}
+              >
                 <div className="profile-pic-bg"></div>
                 <img 
                   className="profile-pic" 
