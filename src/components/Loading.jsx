@@ -3,6 +3,7 @@ import './Loading.css';
 import gsap from "gsap";
 
 const Loading = ({ onComplete }) => {
+  const dotX = typeof window !== 'undefined' && window.innerWidth <= 600 ? 58 : 60;
   const overlayRef = useRef(null);
   const outlineGroupRef = useRef(null);
   const outlineRef = useRef(null);
@@ -141,7 +142,7 @@ const Loading = ({ onComplete }) => {
         </text>
         <text
           ref={dotRef}
-          x="58"
+          x={dotX}
           y="52"
           textAnchor="start"
           dominantBaseline="middle"
