@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import './Header.css';
 
 const Header = () => {
+  const dotX = typeof window !== 'undefined' && window.innerWidth <= 900 ? 63 : 65;
   const [showHeader, setShowHeader] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
@@ -173,7 +174,26 @@ const Header = () => {
         transition={{ duration: 1.0, ease: 'easeOut' }}
       >
         <a href="#home" className="home-button diamond" onClick={() => setMenuOpen(false)}>
-          <span className="diamond-text">N.</span>
+          <svg className="diamond-mark" viewBox="0 0 100 100" aria-hidden="true">
+            <text
+              x="50"
+              y="52"
+              textAnchor="middle"
+              dominantBaseline="middle"
+              className="diamond-letter"
+            >
+              N
+            </text>
+            <text
+              x={dotX}
+              y="52"
+              textAnchor="start"
+              dominantBaseline="middle"
+              className="diamond-dot"
+            >
+              .
+            </text>
+          </svg>
         </a>
 
         <button
