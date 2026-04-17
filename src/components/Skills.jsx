@@ -89,22 +89,17 @@ const Skills = () => {
   }, []);
 
   useEffect(() => {
-    const stopRotation = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+
+    return () => {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
         intervalRef.current = null;
       }
     };
-
-    stopRotation();
-
-    if (!isMobile) {
-      intervalRef.current = setInterval(() => {
-        setRotationStep((current) => current + 1);
-      }, 2500);
-    }
-
-    return stopRotation;
   }, [isMobile]);
 
   const rotateToPrevious = () => {
@@ -170,6 +165,16 @@ const Skills = () => {
           onTouchEnd={isMobile ? handleTouchEnd : undefined}
           onTouchCancel={isMobile ? handleTouchEnd : undefined}
         >
+          {!isMobile && (
+            <button
+              type="button"
+              className="skills-nav skills-nav-prev skills-nav-line-h4"
+              aria-label="Show previous skill category"
+              onClick={rotateToPrevious}
+            >
+              <span aria-hidden="true">‹</span>
+            </button>
+          )}
           <div
             className={`skills-carousel ${isMobile ? 'touch-enabled' : ''}`}
             style={{ transform: `rotateY(${renderedRotationDegrees}deg)` }}
@@ -203,6 +208,16 @@ const Skills = () => {
               );
             })}
           </div>
+          {!isMobile && (
+            <button
+              type="button"
+              className="skills-nav skills-nav-next skills-nav-line-h4"
+              aria-label="Show next skill category"
+              onClick={rotateToNext}
+            >
+              <span aria-hidden="true">›</span>
+            </button>
+          )}
         </div>
         {isMobile && <p className="skills-swipe-hint">Swipe to explore</p>}
       </div>
