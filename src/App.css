@@ -75,6 +75,7 @@ body, html {
   .main-content .experience-section,
   .main-content .skills-section,
   .main-content .work-section,
+  .main-content .writing-section,
   .main-content .contact-section {
     padding: var(--section-pad-mobile) 0;
   }
@@ -82,6 +83,7 @@ body, html {
   .main-content .experience-title,
   .main-content .skills-title,
   .main-content .work-title,
+  .main-content .writing-title,
   .main-content .contact-title {
     margin-bottom: var(--section-title-gap-mobile);
   }
@@ -89,6 +91,7 @@ body, html {
   .main-content .experience-title::after,
   .main-content .skills-title::after,
   .main-content .work-title::after,
+  .main-content .writing-title::after,
   .main-content .contact-title h2::after {
     height: var(--section-title-underline-height-mobile);
   }

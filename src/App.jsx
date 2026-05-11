@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import Loading from './components/Loading';
 import Experience from './components/Experience';
 import Work from './components/Work';
+import Writing from './components/Writing';
 import { useState } from 'react';
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
             <Experience />            
             <Skills />
             <Work />
+            <Writing />
             <Contact />
           </main>
           <Footer />
