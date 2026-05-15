@@ -82,10 +82,18 @@
   font-family: var(--font-mono);
   font-size: 14px;
   color: var(--primary);
+  -webkit-text-fill-color: var(--primary);
   border: 1px solid var(--primary);
   padding: 8px 12px;
   border-radius: 4px;
   transition: box-shadow 0.3s ease;
+}
+
+.writing-link:visited,
+.writing-link:active,
+.writing-link:focus {
+  color: var(--primary);
+  -webkit-text-fill-color: var(--primary);
 }
 
 .writing-link:hover {
